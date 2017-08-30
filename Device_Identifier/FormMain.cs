@@ -11,8 +11,8 @@ using System.Windows.Forms;
 namespace Device_Identifier
 {
     public partial class FormMain : Form
-    {   
-        /*
+    {
+        
         // global strings:
         public string pc_OSversion = "";
         public string pc_Type = "";
@@ -38,16 +38,41 @@ namespace Device_Identifier
         public string periph_InputDevices = "";
         public string periph_MonitorsConnected = "";
         // END: global strings
-        */
-
+        
+        
         public FormMain()
         {
             InitializeComponent();
-            Details d = new Details();
+            textBox_Username.Select();
+            displayDetails();
         }
 
         // method to display values in the corresponding fields
-        private void displayValues() {
+        private void displayDetails() {
+
+            textBox_OSversion.Text = pc_OSversion;
+            textBox_Type.Text = pc_Type;
+            textBox_Manufacturer.Text = pc_Manufacturer;
+            textBox_Model.Text = pc_Model;
+            textBox_SerialNumber.Text = pc_SerialNumber;
+            textBox_ComputerName.Text = pc_ComputerName;
+
+            textBox_CPU.Text = pcSpecs_CPU;
+            textBox_RAMinstalled.Text = pcSpecs_RAMinstalled;
+            textBox_RAMcapabilities.Text = pcSpecs_RAMcapabilities;
+            textBox_RAMmoduleDetails.Text = pcSpecs_RAMmoduleDetails;
+            textBox_HDDcapacity.Text = pcSpecs_HDDcapacity;
+            textBox_HDDtype.Text = pcSpecs_HDDtype;
+
+            textBox_ID.Text = user_ID.ToString();
+            textBox_Username.Text = user_Username;
+            textBox_Location.Text = user_Location;
+            //Department
+
+            //DockingStation
+            textBox_PortsAvailable.Text = periph_PortsAvailable;
+            //InputDevices
+            textBox_MonitorsConnected.Text = periph_MonitorsConnected;
 
         }
 
