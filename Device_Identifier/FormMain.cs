@@ -12,8 +12,8 @@ namespace Device_Identifier
 {
     public partial class FormMain : Form
     {
-        
-        // global strings:
+
+        // global variables/arrays:
         public string pc_OSversion = "";
         public string pc_Type = "";
         public string pc_Manufacturer = "";
@@ -28,18 +28,24 @@ namespace Device_Identifier
         public string pcSpecs_HDDcapacity = "";
         public string pcSpecs_HDDtype = "";
 
-        public int    user_ID = 0;
+        public int user_ID = 0;
         public string user_Username = "";
         public string user_Location = "";
-        public string user_Department = "";
+        public List<string> user_Department = new List<string>()
+        {
+            "MIS", "Finance", "Purchasing", "Engineering"
+        };
 
-        public bool   periph_DockingStation = false;
+        public bool periph_DockingStation = false;
         public string periph_PortsAvailable = "";
-        public string periph_InputDevices = "";
+        public List<string> periph_InputDevice = new List<string>()
+        {
+            "HP mouse & keyboard (wired)", "MS mouse & keyboard (wireless)"
+        };
         public string periph_MonitorsConnected = "";
-        // END: global strings
-        
-        
+        // END: global variables/arrays
+
+
         public FormMain()
         {
             InitializeComponent();
@@ -48,7 +54,8 @@ namespace Device_Identifier
         }
 
         // method to display values in the corresponding fields
-        private void displayDetails() {
+        private void displayDetails()
+        {
 
             textBox_OSversion.Text = pc_OSversion;
             textBox_Type.Text = pc_Type;
@@ -67,11 +74,13 @@ namespace Device_Identifier
             textBox_ID.Text = user_ID.ToString();
             textBox_Username.Text = user_Username;
             textBox_Location.Text = user_Location;
-            //Department
+            comboBox_Department.DataSource = user_Department;
+            comboBox_Department.SelectedIndex = -1;
 
-            //DockingStation
+            checkBox_DockingStation.Checked = periph_DockingStation;
             textBox_PortsAvailable.Text = periph_PortsAvailable;
-            //InputDevices
+            comboBox_InputDevices.DataSource = periph_InputDevice;
+            comboBox_InputDevices.SelectedIndex = -1;
             textBox_MonitorsConnected.Text = periph_MonitorsConnected;
 
         }
@@ -91,7 +100,8 @@ namespace Device_Identifier
 
         // method to scan the system 
         // and obtain all the required information
-        private void scanSystem() {
+        private void scanSystem()
+        {
 
         }
 
