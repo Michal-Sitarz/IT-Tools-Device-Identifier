@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.labelTop = new System.Windows.Forms.Label();
             this.label_ID = new System.Windows.Forms.Label();
             this.label_Username = new System.Windows.Forms.Label();
@@ -74,6 +75,9 @@
             this.btn_ReadSpecs = new System.Windows.Forms.Button();
             this.btn_SaveToDB = new System.Windows.Forms.Button();
             this.numericBox_MonitorsConnected = new System.Windows.Forms.NumericUpDown();
+            this.lblTop_Match = new System.Windows.Forms.Label();
+            this.lblBot_Match = new System.Windows.Forms.Label();
+            this.lblSide_Match = new System.Windows.Forms.Label();
             this.groupBox_PC.SuspendLayout();
             this.groupBox_User.SuspendLayout();
             this.groupBox_PCspecs.SuspendLayout();
@@ -125,6 +129,9 @@
             // 
             // groupBox_PC
             // 
+            this.groupBox_PC.Controls.Add(this.lblSide_Match);
+            this.groupBox_PC.Controls.Add(this.lblBot_Match);
+            this.groupBox_PC.Controls.Add(this.lblTop_Match);
             this.groupBox_PC.Controls.Add(this.textBox_ComputerName);
             this.groupBox_PC.Controls.Add(this.textBox_SerialNumber);
             this.groupBox_PC.Controls.Add(this.textBox_Model);
@@ -386,10 +393,10 @@
             // 
             this.textBox_RAMmoduleDetails.BackColor = System.Drawing.Color.LightGray;
             this.textBox_RAMmoduleDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_RAMmoduleDetails.Location = new System.Drawing.Point(170, 47);
+            this.textBox_RAMmoduleDetails.Location = new System.Drawing.Point(114, 47);
             this.textBox_RAMmoduleDetails.Name = "textBox_RAMmoduleDetails";
             this.textBox_RAMmoduleDetails.ReadOnly = true;
-            this.textBox_RAMmoduleDetails.Size = new System.Drawing.Size(196, 20);
+            this.textBox_RAMmoduleDetails.Size = new System.Drawing.Size(252, 20);
             this.textBox_RAMmoduleDetails.TabIndex = 17;
             this.textBox_RAMmoduleDetails.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -452,9 +459,9 @@
             this.label_RAMmoduleDetails.ForeColor = System.Drawing.Color.White;
             this.label_RAMmoduleDetails.Location = new System.Drawing.Point(19, 50);
             this.label_RAMmoduleDetails.Name = "label_RAMmoduleDetails";
-            this.label_RAMmoduleDetails.Size = new System.Drawing.Size(104, 13);
+            this.label_RAMmoduleDetails.Size = new System.Drawing.Size(67, 13);
             this.label_RAMmoduleDetails.TabIndex = 5;
-            this.label_RAMmoduleDetails.Text = "RAM module details:";
+            this.label_RAMmoduleDetails.Text = "RAM details:";
             // 
             // label_RAMcapabilities
             // 
@@ -602,6 +609,33 @@
             this.numericBox_MonitorsConnected.Size = new System.Drawing.Size(39, 20);
             this.numericBox_MonitorsConnected.TabIndex = 24;
             // 
+            // lblTop_Match
+            // 
+            this.lblTop_Match.BackColor = System.Drawing.Color.White;
+            this.lblTop_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblTop_Match.Location = new System.Drawing.Point(272, 136);
+            this.lblTop_Match.Name = "lblTop_Match";
+            this.lblTop_Match.Size = new System.Drawing.Size(12, 5);
+            this.lblTop_Match.TabIndex = 14;
+            // 
+            // lblBot_Match
+            // 
+            this.lblBot_Match.BackColor = System.Drawing.Color.White;
+            this.lblBot_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblBot_Match.Location = new System.Drawing.Point(272, 162);
+            this.lblBot_Match.Name = "lblBot_Match";
+            this.lblBot_Match.Size = new System.Drawing.Size(12, 5);
+            this.lblBot_Match.TabIndex = 15;
+            // 
+            // lblSide_Match
+            // 
+            this.lblSide_Match.BackColor = System.Drawing.Color.White;
+            this.lblSide_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblSide_Match.Location = new System.Drawing.Point(279, 136);
+            this.lblSide_Match.Name = "lblSide_Match";
+            this.lblSide_Match.Size = new System.Drawing.Size(5, 31);
+            this.lblSide_Match.TabIndex = 16;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -616,9 +650,9 @@
             this.Controls.Add(this.groupBox_PC);
             this.Controls.Add(this.labelTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IT Systems Management Tools: Device Identifier";
             this.groupBox_PC.ResumeLayout(false);
@@ -683,5 +717,8 @@
         private System.Windows.Forms.ComboBox comboBox_Department;
         private System.Windows.Forms.ComboBox comboBox_InputDevices;
         private System.Windows.Forms.NumericUpDown numericBox_MonitorsConnected;
+        private System.Windows.Forms.Label lblSide_Match;
+        private System.Windows.Forms.Label lblBot_Match;
+        private System.Windows.Forms.Label lblTop_Match;
     }
 }
