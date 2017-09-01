@@ -67,18 +67,18 @@
             this.groupBox_Peripherals = new System.Windows.Forms.GroupBox();
             this.comboBox_InputDevices = new System.Windows.Forms.ComboBox();
             this.textBox_MonitorsConnected = new System.Windows.Forms.TextBox();
-            this.textBox_PortsAvailable = new System.Windows.Forms.TextBox();
             this.checkBox_DockingStation = new System.Windows.Forms.CheckBox();
             this.label_MonitorsConnected = new System.Windows.Forms.Label();
-            this.label_PortsAvailable = new System.Windows.Forms.Label();
             this.label_InputDevices = new System.Windows.Forms.Label();
             this.label_DockingStation = new System.Windows.Forms.Label();
             this.btn_ReadSpecs = new System.Windows.Forms.Button();
             this.btn_SaveToDB = new System.Windows.Forms.Button();
+            this.numericBox_MonitorsConnected = new System.Windows.Forms.NumericUpDown();
             this.groupBox_PC.SuspendLayout();
             this.groupBox_User.SuspendLayout();
             this.groupBox_PCspecs.SuspendLayout();
             this.groupBox_Peripherals.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericBox_MonitorsConnected)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTop
@@ -152,9 +152,9 @@
             this.textBox_ComputerName.Location = new System.Drawing.Point(114, 154);
             this.textBox_ComputerName.Name = "textBox_ComputerName";
             this.textBox_ComputerName.ReadOnly = true;
-            this.textBox_ComputerName.Size = new System.Drawing.Size(252, 20);
+            this.textBox_ComputerName.Size = new System.Drawing.Size(154, 20);
             this.textBox_ComputerName.TabIndex = 13;
-            this.textBox_ComputerName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_ComputerName.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBox_SerialNumber
             // 
@@ -163,9 +163,9 @@
             this.textBox_SerialNumber.Location = new System.Drawing.Point(114, 128);
             this.textBox_SerialNumber.Name = "textBox_SerialNumber";
             this.textBox_SerialNumber.ReadOnly = true;
-            this.textBox_SerialNumber.Size = new System.Drawing.Size(252, 20);
+            this.textBox_SerialNumber.Size = new System.Drawing.Size(154, 20);
             this.textBox_SerialNumber.TabIndex = 12;
-            this.textBox_SerialNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_SerialNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBox_Model
             // 
@@ -364,7 +364,7 @@
             // 
             this.textBox_HDDtype.BackColor = System.Drawing.Color.LightGray;
             this.textBox_HDDtype.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_HDDtype.Location = new System.Drawing.Point(170, 151);
+            this.textBox_HDDtype.Location = new System.Drawing.Point(170, 125);
             this.textBox_HDDtype.Name = "textBox_HDDtype";
             this.textBox_HDDtype.ReadOnly = true;
             this.textBox_HDDtype.Size = new System.Drawing.Size(196, 20);
@@ -375,7 +375,7 @@
             // 
             this.textBox_HDDcapacity.BackColor = System.Drawing.Color.LightGray;
             this.textBox_HDDcapacity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_HDDcapacity.Location = new System.Drawing.Point(170, 125);
+            this.textBox_HDDcapacity.Location = new System.Drawing.Point(170, 151);
             this.textBox_HDDcapacity.Name = "textBox_HDDcapacity";
             this.textBox_HDDcapacity.ReadOnly = true;
             this.textBox_HDDcapacity.Size = new System.Drawing.Size(196, 20);
@@ -386,7 +386,7 @@
             // 
             this.textBox_RAMmoduleDetails.BackColor = System.Drawing.Color.LightGray;
             this.textBox_RAMmoduleDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_RAMmoduleDetails.Location = new System.Drawing.Point(170, 99);
+            this.textBox_RAMmoduleDetails.Location = new System.Drawing.Point(170, 47);
             this.textBox_RAMmoduleDetails.Name = "textBox_RAMmoduleDetails";
             this.textBox_RAMmoduleDetails.ReadOnly = true;
             this.textBox_RAMmoduleDetails.Size = new System.Drawing.Size(196, 20);
@@ -397,7 +397,7 @@
             // 
             this.textBox_RAMcapabilities.BackColor = System.Drawing.Color.LightGray;
             this.textBox_RAMcapabilities.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_RAMcapabilities.Location = new System.Drawing.Point(170, 73);
+            this.textBox_RAMcapabilities.Location = new System.Drawing.Point(170, 99);
             this.textBox_RAMcapabilities.Name = "textBox_RAMcapabilities";
             this.textBox_RAMcapabilities.ReadOnly = true;
             this.textBox_RAMcapabilities.Size = new System.Drawing.Size(196, 20);
@@ -408,7 +408,7 @@
             // 
             this.textBox_RAMinstalled.BackColor = System.Drawing.Color.LightGray;
             this.textBox_RAMinstalled.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_RAMinstalled.Location = new System.Drawing.Point(170, 47);
+            this.textBox_RAMinstalled.Location = new System.Drawing.Point(170, 73);
             this.textBox_RAMinstalled.Name = "textBox_RAMinstalled";
             this.textBox_RAMinstalled.ReadOnly = true;
             this.textBox_RAMinstalled.Size = new System.Drawing.Size(196, 20);
@@ -419,10 +419,10 @@
             // 
             this.textBox_CPU.BackColor = System.Drawing.Color.LightGray;
             this.textBox_CPU.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_CPU.Location = new System.Drawing.Point(170, 21);
+            this.textBox_CPU.Location = new System.Drawing.Point(114, 21);
             this.textBox_CPU.Name = "textBox_CPU";
             this.textBox_CPU.ReadOnly = true;
-            this.textBox_CPU.Size = new System.Drawing.Size(196, 20);
+            this.textBox_CPU.Size = new System.Drawing.Size(252, 20);
             this.textBox_CPU.TabIndex = 14;
             this.textBox_CPU.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -430,7 +430,7 @@
             // 
             this.label_HDDtype.AutoSize = true;
             this.label_HDDtype.ForeColor = System.Drawing.Color.White;
-            this.label_HDDtype.Location = new System.Drawing.Point(19, 154);
+            this.label_HDDtype.Location = new System.Drawing.Point(19, 128);
             this.label_HDDtype.Name = "label_HDDtype";
             this.label_HDDtype.Size = new System.Drawing.Size(57, 13);
             this.label_HDDtype.TabIndex = 7;
@@ -440,7 +440,7 @@
             // 
             this.label_HDDcapacity.AutoSize = true;
             this.label_HDDcapacity.ForeColor = System.Drawing.Color.White;
-            this.label_HDDcapacity.Location = new System.Drawing.Point(19, 128);
+            this.label_HDDcapacity.Location = new System.Drawing.Point(19, 154);
             this.label_HDDcapacity.Name = "label_HDDcapacity";
             this.label_HDDcapacity.Size = new System.Drawing.Size(77, 13);
             this.label_HDDcapacity.TabIndex = 6;
@@ -450,7 +450,7 @@
             // 
             this.label_RAMmoduleDetails.AutoSize = true;
             this.label_RAMmoduleDetails.ForeColor = System.Drawing.Color.White;
-            this.label_RAMmoduleDetails.Location = new System.Drawing.Point(19, 102);
+            this.label_RAMmoduleDetails.Location = new System.Drawing.Point(19, 50);
             this.label_RAMmoduleDetails.Name = "label_RAMmoduleDetails";
             this.label_RAMmoduleDetails.Size = new System.Drawing.Size(104, 13);
             this.label_RAMmoduleDetails.TabIndex = 5;
@@ -460,7 +460,7 @@
             // 
             this.label_RAMcapabilities.AutoSize = true;
             this.label_RAMcapabilities.ForeColor = System.Drawing.Color.White;
-            this.label_RAMcapabilities.Location = new System.Drawing.Point(19, 76);
+            this.label_RAMcapabilities.Location = new System.Drawing.Point(19, 102);
             this.label_RAMcapabilities.Name = "label_RAMcapabilities";
             this.label_RAMcapabilities.Size = new System.Drawing.Size(142, 13);
             this.label_RAMcapabilities.TabIndex = 4;
@@ -470,7 +470,7 @@
             // 
             this.label_RAMinstalled.AutoSize = true;
             this.label_RAMinstalled.ForeColor = System.Drawing.Color.White;
-            this.label_RAMinstalled.Location = new System.Drawing.Point(19, 50);
+            this.label_RAMinstalled.Location = new System.Drawing.Point(19, 76);
             this.label_RAMinstalled.Name = "label_RAMinstalled";
             this.label_RAMinstalled.Size = new System.Drawing.Size(128, 13);
             this.label_RAMinstalled.TabIndex = 3;
@@ -488,18 +488,17 @@
             // 
             // groupBox_Peripherals
             // 
+            this.groupBox_Peripherals.Controls.Add(this.numericBox_MonitorsConnected);
             this.groupBox_Peripherals.Controls.Add(this.comboBox_InputDevices);
             this.groupBox_Peripherals.Controls.Add(this.textBox_MonitorsConnected);
-            this.groupBox_Peripherals.Controls.Add(this.textBox_PortsAvailable);
             this.groupBox_Peripherals.Controls.Add(this.checkBox_DockingStation);
             this.groupBox_Peripherals.Controls.Add(this.label_MonitorsConnected);
-            this.groupBox_Peripherals.Controls.Add(this.label_PortsAvailable);
             this.groupBox_Peripherals.Controls.Add(this.label_InputDevices);
             this.groupBox_Peripherals.Controls.Add(this.label_DockingStation);
             this.groupBox_Peripherals.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.groupBox_Peripherals.Location = new System.Drawing.Point(479, 346);
+            this.groupBox_Peripherals.Location = new System.Drawing.Point(479, 369);
             this.groupBox_Peripherals.Name = "groupBox_Peripherals";
-            this.groupBox_Peripherals.Size = new System.Drawing.Size(384, 135);
+            this.groupBox_Peripherals.Size = new System.Drawing.Size(384, 112);
             this.groupBox_Peripherals.TabIndex = 9;
             this.groupBox_Peripherals.TabStop = false;
             this.groupBox_Peripherals.Text = "Peripherals:";
@@ -508,36 +507,26 @@
             // 
             this.comboBox_InputDevices.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox_InputDevices.FormattingEnabled = true;
-            this.comboBox_InputDevices.Location = new System.Drawing.Point(137, 75);
+            this.comboBox_InputDevices.Location = new System.Drawing.Point(135, 52);
             this.comboBox_InputDevices.Name = "comboBox_InputDevices";
-            this.comboBox_InputDevices.Size = new System.Drawing.Size(196, 21);
+            this.comboBox_InputDevices.Size = new System.Drawing.Size(232, 21);
             this.comboBox_InputDevices.TabIndex = 23;
             // 
             // textBox_MonitorsConnected
             // 
             this.textBox_MonitorsConnected.BackColor = System.Drawing.Color.LightGray;
             this.textBox_MonitorsConnected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_MonitorsConnected.Location = new System.Drawing.Point(137, 102);
+            this.textBox_MonitorsConnected.Location = new System.Drawing.Point(135, 24);
             this.textBox_MonitorsConnected.Name = "textBox_MonitorsConnected";
             this.textBox_MonitorsConnected.ReadOnly = true;
-            this.textBox_MonitorsConnected.Size = new System.Drawing.Size(196, 20);
+            this.textBox_MonitorsConnected.Size = new System.Drawing.Size(187, 20);
             this.textBox_MonitorsConnected.TabIndex = 21;
             this.textBox_MonitorsConnected.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox_PortsAvailable
-            // 
-            this.textBox_PortsAvailable.BackColor = System.Drawing.Color.LightGray;
-            this.textBox_PortsAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_PortsAvailable.Location = new System.Drawing.Point(137, 50);
-            this.textBox_PortsAvailable.Name = "textBox_PortsAvailable";
-            this.textBox_PortsAvailable.Size = new System.Drawing.Size(196, 20);
-            this.textBox_PortsAvailable.TabIndex = 19;
-            this.textBox_PortsAvailable.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // checkBox_DockingStation
             // 
             this.checkBox_DockingStation.AutoSize = true;
-            this.checkBox_DockingStation.Location = new System.Drawing.Point(137, 26);
+            this.checkBox_DockingStation.Location = new System.Drawing.Point(135, 82);
             this.checkBox_DockingStation.Name = "checkBox_DockingStation";
             this.checkBox_DockingStation.Size = new System.Drawing.Size(15, 14);
             this.checkBox_DockingStation.TabIndex = 5;
@@ -547,27 +536,17 @@
             // 
             this.label_MonitorsConnected.AutoSize = true;
             this.label_MonitorsConnected.ForeColor = System.Drawing.Color.White;
-            this.label_MonitorsConnected.Location = new System.Drawing.Point(21, 104);
+            this.label_MonitorsConnected.Location = new System.Drawing.Point(19, 26);
             this.label_MonitorsConnected.Name = "label_MonitorsConnected";
             this.label_MonitorsConnected.Size = new System.Drawing.Size(104, 13);
             this.label_MonitorsConnected.TabIndex = 4;
             this.label_MonitorsConnected.Text = "Monitors connected:";
             // 
-            // label_PortsAvailable
-            // 
-            this.label_PortsAvailable.AutoSize = true;
-            this.label_PortsAvailable.ForeColor = System.Drawing.Color.White;
-            this.label_PortsAvailable.Location = new System.Drawing.Point(21, 52);
-            this.label_PortsAvailable.Name = "label_PortsAvailable";
-            this.label_PortsAvailable.Size = new System.Drawing.Size(79, 13);
-            this.label_PortsAvailable.TabIndex = 1;
-            this.label_PortsAvailable.Text = "Ports available:";
-            // 
             // label_InputDevices
             // 
             this.label_InputDevices.AutoSize = true;
             this.label_InputDevices.ForeColor = System.Drawing.Color.White;
-            this.label_InputDevices.Location = new System.Drawing.Point(21, 78);
+            this.label_InputDevices.Location = new System.Drawing.Point(19, 55);
             this.label_InputDevices.Name = "label_InputDevices";
             this.label_InputDevices.Size = new System.Drawing.Size(74, 13);
             this.label_InputDevices.TabIndex = 2;
@@ -577,7 +556,7 @@
             // 
             this.label_DockingStation.AutoSize = true;
             this.label_DockingStation.ForeColor = System.Drawing.Color.White;
-            this.label_DockingStation.Location = new System.Drawing.Point(21, 26);
+            this.label_DockingStation.Location = new System.Drawing.Point(19, 81);
             this.label_DockingStation.Name = "label_DockingStation";
             this.label_DockingStation.Size = new System.Drawing.Size(86, 13);
             this.label_DockingStation.TabIndex = 3;
@@ -589,7 +568,7 @@
             this.btn_ReadSpecs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_ReadSpecs.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ReadSpecs.ForeColor = System.Drawing.Color.White;
-            this.btn_ReadSpecs.Location = new System.Drawing.Point(501, 262);
+            this.btn_ReadSpecs.Location = new System.Drawing.Point(501, 273);
             this.btn_ReadSpecs.Name = "btn_ReadSpecs";
             this.btn_ReadSpecs.Size = new System.Drawing.Size(158, 57);
             this.btn_ReadSpecs.TabIndex = 10;
@@ -603,13 +582,25 @@
             this.btn_SaveToDB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_SaveToDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_SaveToDB.ForeColor = System.Drawing.Color.White;
-            this.btn_SaveToDB.Location = new System.Drawing.Point(689, 262);
+            this.btn_SaveToDB.Location = new System.Drawing.Point(689, 273);
             this.btn_SaveToDB.Name = "btn_SaveToDB";
             this.btn_SaveToDB.Size = new System.Drawing.Size(157, 57);
             this.btn_SaveToDB.TabIndex = 11;
             this.btn_SaveToDB.Text = "Save to DB";
             this.btn_SaveToDB.UseVisualStyleBackColor = false;
             this.btn_SaveToDB.Click += new System.EventHandler(this.btn_SaveToDB_Click);
+            // 
+            // numericBox_MonitorsConnected
+            // 
+            this.numericBox_MonitorsConnected.Location = new System.Drawing.Point(328, 24);
+            this.numericBox_MonitorsConnected.Maximum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericBox_MonitorsConnected.Name = "numericBox_MonitorsConnected";
+            this.numericBox_MonitorsConnected.Size = new System.Drawing.Size(39, 20);
+            this.numericBox_MonitorsConnected.TabIndex = 24;
             // 
             // FormMain
             // 
@@ -638,6 +629,7 @@
             this.groupBox_PCspecs.PerformLayout();
             this.groupBox_Peripherals.ResumeLayout(false);
             this.groupBox_Peripherals.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericBox_MonitorsConnected)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -667,7 +659,6 @@
         private System.Windows.Forms.Label label_CPU;
         private System.Windows.Forms.GroupBox groupBox_Peripherals;
         private System.Windows.Forms.Label label_MonitorsConnected;
-        private System.Windows.Forms.Label label_PortsAvailable;
         private System.Windows.Forms.Label label_InputDevices;
         private System.Windows.Forms.Label label_DockingStation;
         private System.Windows.Forms.Button btn_ReadSpecs;
@@ -689,8 +680,8 @@
         private System.Windows.Forms.TextBox textBox_Username;
         private System.Windows.Forms.TextBox textBox_ID;
         private System.Windows.Forms.TextBox textBox_MonitorsConnected;
-        private System.Windows.Forms.TextBox textBox_PortsAvailable;
         private System.Windows.Forms.ComboBox comboBox_Department;
         private System.Windows.Forms.ComboBox comboBox_InputDevices;
+        private System.Windows.Forms.NumericUpDown numericBox_MonitorsConnected;
     }
 }
