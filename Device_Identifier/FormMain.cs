@@ -34,11 +34,11 @@ namespace Device_Identifier
         public string user_Username = "";
         public string user_Location = "";
         public string user_Department = "";
-        
+
         public bool periph_DockingStation = false;
         public string periph_InputDevice = "";
         public string periph_MonitorsConnected = "";
-        
+
 
         // chassis type enumeration
         public enum ChassisTypes
@@ -86,7 +86,7 @@ namespace Device_Identifier
             "HP mouse & keyboard (wired)",
             "MS mouse & keyboard (wireless)"
         };
-        
+
         /// END: global variables/arrays
 
 
@@ -109,6 +109,7 @@ namespace Device_Identifier
         /// if the Computer Name / Serial Number
         /// is matching company's naming convention or not
         /// green - for YES, red - for NO
+
         private void setLabelsColours()
         {
             string checkSN = pc_SerialNumber;
@@ -129,6 +130,7 @@ namespace Device_Identifier
                 lblSide_Match.BackColor = Color.Red;
             }
         }
+
 
         /// method to display values in the corresponding fields
         private void updateDisplayedDetails()
@@ -203,7 +205,19 @@ namespace Device_Identifier
             pcSpecs_RAMmoduleDetails += " MHz";
 
             // RAM: installed
+            ulong ramCapacity;
+            try
+            {
+                ramCapacity = Convert.ToUInt64(performQuery("Capacity", "Win32_PhysicalMemory"));
+                ramCapacity = (ramCapacity / (1024 * 1024));
+                pcSpecs_RAMinstalled = ramCapacity.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 
+            pcSpecs_RAMinstalled += " MB ";
 
             // RAM: capabilities
 
