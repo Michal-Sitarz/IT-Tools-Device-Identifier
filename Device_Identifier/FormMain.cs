@@ -205,21 +205,12 @@ namespace Device_Identifier
             pcSpecs_RAMmoduleDetails += " MHz";
 
             // RAM: installed
-            ulong ramCapacity;
-            try
-            {
-                ramCapacity = Convert.ToUInt64(performQuery("Capacity", "Win32_PhysicalMemory"));
-                ramCapacity = (ramCapacity / (1024 * 1024));
-                pcSpecs_RAMinstalled = ramCapacity.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-            pcSpecs_RAMinstalled += " MB ";
+            pcSpecs_RAMinstalled = getRAMinstalled();
 
             // RAM: capabilities
+            pcSpecs_RAMcapabilities = performQuery("MaxCapacity", "Win32_PhysicalMemoryArray");
+            pcSpecs_RAMcapabilities = (Convert.ToUInt64(pcSpecs_RAMcapabilities) / (1024 * 1024)).ToString() + " GB / "; //converts to GB units
+            pcSpecs_RAMcapabilities += performQuery("MemoryDevices", "Win32_PhysicalMemoryArray");
 
 
 
@@ -227,6 +218,7 @@ namespace Device_Identifier
             updateDisplayedDetails();
             setLabelsColours();
         }
+
 
         /// method to perform single WMI query
         private string performQuery(string queryField, string queryWin32lib)
@@ -254,6 +246,7 @@ namespace Device_Identifier
             return queryString;
 
         }
+
 
         /// method to obtain chassis type
         public ChassisTypes getChassisType()
@@ -283,5 +276,36 @@ namespace Device_Identifier
             return ChassisTypes.Unknown;
         }
 
+
+        /// method to obtain the info about installed RAM memory
+        public string getRAMinstalled()
+        {
+            ulong ramCapacity = 0;
+            int slotsQuantity = 0;
+
+            try
+            {
+                using (ManagementObjectSearcher mosQuery = new ManagementObjectSearcher("SELECT DeviceLocator, Capacity FROM Win32_PhysicalMemory"))
+                {
+                    foreach (ManagementObject queryData in mosQuery.Get())
+                    {
+                        if (queryData["DeviceLocator"] != null && queryData["Capacity"] != null)
+                        {
+                            ramCapacity += Convert.ToUInt64(queryData["Capacity"].ToString());
+                            slotsQuantity++;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+                                    
+            return (ramCapacity / Math.Pow(1024, 3)).ToString() + " GB / " + slotsQuantity.ToString(); // RAM capacity converted to GB !!!
+
+        }
+        
     }
 }

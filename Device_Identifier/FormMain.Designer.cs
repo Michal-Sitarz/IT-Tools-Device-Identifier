@@ -34,6 +34,9 @@
             this.label_Username = new System.Windows.Forms.Label();
             this.label_Location = new System.Windows.Forms.Label();
             this.groupBox_PC = new System.Windows.Forms.GroupBox();
+            this.lblSide_Match = new System.Windows.Forms.Label();
+            this.lblBot_Match = new System.Windows.Forms.Label();
+            this.lblTop_Match = new System.Windows.Forms.Label();
             this.textBox_ComputerName = new System.Windows.Forms.TextBox();
             this.textBox_SerialNumber = new System.Windows.Forms.TextBox();
             this.textBox_Model = new System.Windows.Forms.TextBox();
@@ -66,6 +69,7 @@
             this.label_RAMinstalled = new System.Windows.Forms.Label();
             this.label_CPU = new System.Windows.Forms.Label();
             this.groupBox_Peripherals = new System.Windows.Forms.GroupBox();
+            this.numericBox_MonitorsConnected = new System.Windows.Forms.NumericUpDown();
             this.comboBox_InputDevices = new System.Windows.Forms.ComboBox();
             this.textBox_MonitorsConnected = new System.Windows.Forms.TextBox();
             this.checkBox_DockingStation = new System.Windows.Forms.CheckBox();
@@ -74,10 +78,6 @@
             this.label_DockingStation = new System.Windows.Forms.Label();
             this.btn_ReadSpecs = new System.Windows.Forms.Button();
             this.btn_SaveToDB = new System.Windows.Forms.Button();
-            this.numericBox_MonitorsConnected = new System.Windows.Forms.NumericUpDown();
-            this.lblTop_Match = new System.Windows.Forms.Label();
-            this.lblBot_Match = new System.Windows.Forms.Label();
-            this.lblSide_Match = new System.Windows.Forms.Label();
             this.groupBox_PC.SuspendLayout();
             this.groupBox_User.SuspendLayout();
             this.groupBox_PCspecs.SuspendLayout();
@@ -151,6 +151,33 @@
             this.groupBox_PC.TabIndex = 4;
             this.groupBox_PC.TabStop = false;
             this.groupBox_PC.Text = "PC:";
+            // 
+            // lblSide_Match
+            // 
+            this.lblSide_Match.BackColor = System.Drawing.Color.White;
+            this.lblSide_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblSide_Match.Location = new System.Drawing.Point(279, 136);
+            this.lblSide_Match.Name = "lblSide_Match";
+            this.lblSide_Match.Size = new System.Drawing.Size(5, 31);
+            this.lblSide_Match.TabIndex = 16;
+            // 
+            // lblBot_Match
+            // 
+            this.lblBot_Match.BackColor = System.Drawing.Color.White;
+            this.lblBot_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblBot_Match.Location = new System.Drawing.Point(272, 162);
+            this.lblBot_Match.Name = "lblBot_Match";
+            this.lblBot_Match.Size = new System.Drawing.Size(12, 5);
+            this.lblBot_Match.TabIndex = 15;
+            // 
+            // lblTop_Match
+            // 
+            this.lblTop_Match.BackColor = System.Drawing.Color.White;
+            this.lblTop_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblTop_Match.Location = new System.Drawing.Point(272, 136);
+            this.lblTop_Match.Name = "lblTop_Match";
+            this.lblTop_Match.Size = new System.Drawing.Size(12, 5);
+            this.lblTop_Match.TabIndex = 14;
             // 
             // textBox_ComputerName
             // 
@@ -404,6 +431,7 @@
             // 
             this.textBox_RAMcapabilities.BackColor = System.Drawing.Color.LightGray;
             this.textBox_RAMcapabilities.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_RAMcapabilities.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.textBox_RAMcapabilities.Location = new System.Drawing.Point(170, 99);
             this.textBox_RAMcapabilities.Name = "textBox_RAMcapabilities";
             this.textBox_RAMcapabilities.ReadOnly = true;
@@ -415,6 +443,7 @@
             // 
             this.textBox_RAMinstalled.BackColor = System.Drawing.Color.LightGray;
             this.textBox_RAMinstalled.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_RAMinstalled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_RAMinstalled.Location = new System.Drawing.Point(170, 73);
             this.textBox_RAMinstalled.Name = "textBox_RAMinstalled";
             this.textBox_RAMinstalled.ReadOnly = true;
@@ -510,6 +539,18 @@
             this.groupBox_Peripherals.TabStop = false;
             this.groupBox_Peripherals.Text = "Peripherals:";
             // 
+            // numericBox_MonitorsConnected
+            // 
+            this.numericBox_MonitorsConnected.Location = new System.Drawing.Point(328, 24);
+            this.numericBox_MonitorsConnected.Maximum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.numericBox_MonitorsConnected.Name = "numericBox_MonitorsConnected";
+            this.numericBox_MonitorsConnected.Size = new System.Drawing.Size(39, 20);
+            this.numericBox_MonitorsConnected.TabIndex = 24;
+            // 
             // comboBox_InputDevices
             // 
             this.comboBox_InputDevices.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -596,45 +637,6 @@
             this.btn_SaveToDB.Text = "Save to DB";
             this.btn_SaveToDB.UseVisualStyleBackColor = false;
             this.btn_SaveToDB.Click += new System.EventHandler(this.btn_SaveToDB_Click);
-            // 
-            // numericBox_MonitorsConnected
-            // 
-            this.numericBox_MonitorsConnected.Location = new System.Drawing.Point(328, 24);
-            this.numericBox_MonitorsConnected.Maximum = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.numericBox_MonitorsConnected.Name = "numericBox_MonitorsConnected";
-            this.numericBox_MonitorsConnected.Size = new System.Drawing.Size(39, 20);
-            this.numericBox_MonitorsConnected.TabIndex = 24;
-            // 
-            // lblTop_Match
-            // 
-            this.lblTop_Match.BackColor = System.Drawing.Color.White;
-            this.lblTop_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblTop_Match.Location = new System.Drawing.Point(272, 136);
-            this.lblTop_Match.Name = "lblTop_Match";
-            this.lblTop_Match.Size = new System.Drawing.Size(12, 5);
-            this.lblTop_Match.TabIndex = 14;
-            // 
-            // lblBot_Match
-            // 
-            this.lblBot_Match.BackColor = System.Drawing.Color.White;
-            this.lblBot_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblBot_Match.Location = new System.Drawing.Point(272, 162);
-            this.lblBot_Match.Name = "lblBot_Match";
-            this.lblBot_Match.Size = new System.Drawing.Size(12, 5);
-            this.lblBot_Match.TabIndex = 15;
-            // 
-            // lblSide_Match
-            // 
-            this.lblSide_Match.BackColor = System.Drawing.Color.White;
-            this.lblSide_Match.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.lblSide_Match.Location = new System.Drawing.Point(279, 136);
-            this.lblSide_Match.Name = "lblSide_Match";
-            this.lblSide_Match.Size = new System.Drawing.Size(5, 31);
-            this.lblSide_Match.TabIndex = 16;
             // 
             // FormMain
             // 
