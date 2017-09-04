@@ -212,7 +212,16 @@ namespace Device_Identifier
             pcSpecs_RAMcapabilities = (Convert.ToUInt64(pcSpecs_RAMcapabilities) / (1024 * 1024)).ToString() + " GB / "; //converts to GB units
             pcSpecs_RAMcapabilities += performQuery("MemoryDevices", "Win32_PhysicalMemoryArray");
 
+            // HDD model
+            pcSpecs_HDDtype = performQuery("Model", "Win32_DiskDrive WHERE Index=0");
 
+            // HDD capacity
+            pcSpecs_HDDcapacity = performQuery("Size", "Win32_DiskDrive WHERE Index=0");
+            pcSpecs_HDDcapacity = Convert.ToInt16(Convert.ToUInt64(pcSpecs_HDDcapacity) / (Math.Pow(1000,3))).ToString() + " GB"; //converts to GB units
+
+            // Monitor connecter
+            periph_MonitorsConnected = performQuery("Caption", "Win32_DesktopMonitor");
+            
 
             ///update displayed details
             updateDisplayedDetails();
