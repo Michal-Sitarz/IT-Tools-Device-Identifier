@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Text;
@@ -16,6 +18,11 @@ namespace Device_Identifier
         /// global variables:
 
         // database fields
+
+        public string user_Username = "";
+        public string user_Location = "";
+        public string user_Department = "";
+
         public string pc_OSversion = "";
         public string pc_Type = "";
         public string pc_Manufacturer = "";
@@ -24,19 +31,14 @@ namespace Device_Identifier
         public string pc_ComputerName = "";
 
         public string pcSpecs_CPU = "";
+        public string pcSpecs_RAMmoduleDetails = "";
         public string pcSpecs_RAMinstalled = "";
         public string pcSpecs_RAMcapabilities = "";
-        public string pcSpecs_RAMmoduleDetails = "";
+        public string pcSpecs_HDDmodel = "";
         public string pcSpecs_HDDcapacity = "";
-        public string pcSpecs_HDDtype = "";
 
-        public int user_ID = 0;
-        public string user_Username = "";
-        public string user_Location = "";
-        public string user_Department = "";
-
-        public bool periph_DockingStation = false;
         public string periph_InputDevice = "";
+        public bool periph_DockingStation = false;
         public string periph_MonitorsConnected = "";
 
 
@@ -87,6 +89,10 @@ namespace Device_Identifier
             "MS mouse & keyboard (wireless)"
         };
 
+        // database variables
+        public string dbFilePath = Directory.GetCurrentDirectory() + @"\deviceDatabase.db";
+
+
         /// END: global variables/arrays
 
 
@@ -102,6 +108,8 @@ namespace Device_Identifier
 
             checkBox_DockingStation.Checked = false;
             textBox_Username.Select();
+
+            btn_SaveToDB.BackColor = Color.IndianRed;
 
         }
 
@@ -147,9 +155,7 @@ namespace Device_Identifier
             textBox_RAMcapabilities.Text = pcSpecs_RAMcapabilities;
             textBox_RAMmoduleDetails.Text = pcSpecs_RAMmoduleDetails;
             textBox_HDDcapacity.Text = pcSpecs_HDDcapacity;
-            textBox_HDDtype.Text = pcSpecs_HDDtype;
-
-            textBox_ID.Text = user_ID.ToString();
+            textBox_HDDtype.Text = pcSpecs_HDDmodel;
 
             textBox_MonitorsConnected.Text = periph_MonitorsConnected;
         }
@@ -166,6 +172,13 @@ namespace Device_Identifier
         private void btn_SaveToDB_Click(object sender, EventArgs e)
         {
 
+            readManualInputFields();
+
+            if (saveDetailsInDB())
+            {
+                btn_SaveToDB.BackColor = Color.ForestGreen;
+            }
+
         }
 
         /// method to scan the system 
@@ -174,54 +187,54 @@ namespace Device_Identifier
         {
 
             // OS version
-            pc_OSversion = performQuery("Caption", "Win32_OperatingSystem");
+            pc_OSversion = performWin32Query("Caption", "Win32_OperatingSystem");
             pc_OSversion += " ";
-            pc_OSversion += performQuery("OSArchitecture", "Win32_OperatingSystem");
+            pc_OSversion += performWin32Query("OSArchitecture", "Win32_OperatingSystem");
 
             // Type
             pc_Type = getChassisType().ToString();
 
             // Manufacturer
-            pc_Manufacturer = performQuery("Manufacturer", "Win32_ComputerSystem");
+            pc_Manufacturer = performWin32Query("Manufacturer", "Win32_ComputerSystem");
 
             // Model
-            pc_Model = performQuery("Model", "Win32_ComputerSystem");
+            pc_Model = performWin32Query("Model", "Win32_ComputerSystem");
 
             // Serial Number
-            pc_SerialNumber = performQuery("SerialNumber", "Win32_BIOS");
+            pc_SerialNumber = performWin32Query("SerialNumber", "Win32_BIOS");
 
             // Computer Name
-            pc_ComputerName = performQuery("Caption", "Win32_ComputerSystem");
+            pc_ComputerName = performWin32Query("Caption", "Win32_ComputerSystem");
 
             // CPU
-            pcSpecs_CPU = performQuery("Name", "Win32_Processor");
+            pcSpecs_CPU = performWin32Query("Name", "Win32_Processor");
 
             // RAM: module details
-            pcSpecs_RAMmoduleDetails = performQuery("Manufacturer", "Win32_PhysicalMemory");
+            pcSpecs_RAMmoduleDetails = performWin32Query("Manufacturer", "Win32_PhysicalMemory");
             pcSpecs_RAMmoduleDetails += " ";
-            pcSpecs_RAMmoduleDetails += performQuery("PartNumber", "Win32_PhysicalMemory").Trim();
+            pcSpecs_RAMmoduleDetails += performWin32Query("PartNumber", "Win32_PhysicalMemory").Trim();
             pcSpecs_RAMmoduleDetails += " @ ";
-            pcSpecs_RAMmoduleDetails += performQuery("Speed", "Win32_PhysicalMemory");
+            pcSpecs_RAMmoduleDetails += performWin32Query("Speed", "Win32_PhysicalMemory");
             pcSpecs_RAMmoduleDetails += " MHz";
 
             // RAM: installed
             pcSpecs_RAMinstalled = getRAMinstalled();
 
             // RAM: capabilities
-            pcSpecs_RAMcapabilities = performQuery("MaxCapacity", "Win32_PhysicalMemoryArray");
+            pcSpecs_RAMcapabilities = performWin32Query("MaxCapacity", "Win32_PhysicalMemoryArray");
             pcSpecs_RAMcapabilities = (Convert.ToUInt64(pcSpecs_RAMcapabilities) / (1024 * 1024)).ToString() + " GB / "; //converts to GB units
-            pcSpecs_RAMcapabilities += performQuery("MemoryDevices", "Win32_PhysicalMemoryArray");
+            pcSpecs_RAMcapabilities += performWin32Query("MemoryDevices", "Win32_PhysicalMemoryArray");
 
             // HDD model
-            pcSpecs_HDDtype = performQuery("Model", "Win32_DiskDrive WHERE Index=0");
+            pcSpecs_HDDmodel = performWin32Query("Model", "Win32_DiskDrive WHERE Index=0");
 
             // HDD capacity
-            pcSpecs_HDDcapacity = performQuery("Size", "Win32_DiskDrive WHERE Index=0");
-            pcSpecs_HDDcapacity = Convert.ToInt16(Convert.ToUInt64(pcSpecs_HDDcapacity) / (Math.Pow(1000,3))).ToString() + " GB"; //converts to GB units
+            pcSpecs_HDDcapacity = performWin32Query("Size", "Win32_DiskDrive WHERE Index=0");
+            pcSpecs_HDDcapacity = Convert.ToInt16(Convert.ToUInt64(pcSpecs_HDDcapacity) / (Math.Pow(1000, 3))).ToString() + " GB"; //converts to GB units
 
-            // Monitor connecter
-            periph_MonitorsConnected = performQuery("Caption", "Win32_DesktopMonitor");
-            
+            // Monitors connected
+            periph_MonitorsConnected = performWin32Query("Caption", "Win32_DesktopMonitor");
+
 
             ///update displayed details
             updateDisplayedDetails();
@@ -230,7 +243,7 @@ namespace Device_Identifier
 
 
         /// method to perform single WMI query
-        private string performQuery(string queryField, string queryWin32lib)
+        private string performWin32Query(string queryField, string queryWin32lib)
         {
             string queryString = "";
             try
@@ -311,10 +324,172 @@ namespace Device_Identifier
             {
                 MessageBox.Show(ex.ToString());
             }
-                                    
+
             return (ramCapacity / Math.Pow(1024, 3)).ToString() + " GB / " + slotsQuantity.ToString(); // RAM capacity converted to GB !!!
 
         }
-        
+
+
+        // method to assign corresponding values from manual (user's) input
+        public void readManualInputFields()
+        {
+
+        }
+
+
+        /// DATABASE functionality (local single-file SQLite DB)
+        public bool saveDetailsInDB()
+        {
+            
+            // check if the DB file exists or not
+            if (!File.Exists(dbFilePath))
+            {
+                createDBfile();
+            }
+            // query to perform that adds new entry to the DB
+            string querySaveDetails = @"INSERT INTO deviceDB(
+                                        user_ID,
+                                        user_Username, 
+                                        user_Location,
+                                        user_Department,
+	                                    pc_ComputerName,
+                                        pc_SerialNumber,
+	                                    pc_Manufacturer,
+                                        pc_Model,
+	                                    pc_Type,
+                                        pc_OSversion,
+	                                    pcSpecs_CPU,
+                                        pcSpecs_RAMmoduleDetails,
+	                                    pcSpecs_RAMinstalled,
+                                        pcSpecs_RAMcapabilities,
+	                                    pcSpecs_HDDmodel,
+                                        pcSpecs_HDDcapacity,
+	                                    periph_MonitorsConnected,
+                                        periph_InputDevice,
+	                                    periph_DockingStation
+                                    )
+                                    VALUES(
+                                        NULL,
+                                    )";
+            
+            // run the query and return its state
+            return runDBquery(querySaveDetails);
+        }
+
+        public void createDBfile()
+        {
+            if (!File.Exists(dbFilePath))
+            {
+                string queryCreateDB = @"CREATE TABLE deviceDB(
+                                        user_ID INTEGER PRIMARY KEY, 
+                                        user_Username TEXT, 
+                                        user_Location TEXT,
+                                        user_Department TEXT,
+	                                    pc_ComputerName TEXT,
+                                        pc_SerialNumber TEXT,
+	                                    pc_Manufacturer TEXT,
+                                        pc_Model TEXT,
+	                                    pc_Type TEXT,
+                                        pc_OSversion TEXT,
+	                                    pcSpecs_CPU TEXT,
+                                        pcSpecs_RAMmoduleDetails TEXT,
+	                                    pcSpecs_RAMinstalled TEXT,
+                                        pcSpecs_RAMcapabilities TEXT,
+	                                    pcSpecs_HDDmodel TEXT,
+                                        pcSpecs_HDDcapacity TEXT,
+	                                    periph_MonitorsConnected TEXT,
+                                        periph_InputDevice TEXT,
+	                                    periph_DockingStation BOOLEAN
+                                    )";
+                //create DB file
+                try
+                {
+                    SQLiteConnection.CreateFile(dbFilePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Can't access local hard drive.");
+                }
+
+                // run query to create DB tables
+                runDBquery(queryCreateDB);
+            }
+
+        }
+
+        public bool runDBquery(string queryString)
+        {
+            bool querySuccess = false;
+            string connectionString = " Data Source = " + dbFilePath + "; Version=3; ";
+
+            // run query to create DB tables
+            using (SQLiteConnection dbCon = new SQLiteConnection(connectionString))
+            {
+                try
+                {
+                    dbCon.Open();
+                    using (SQLiteCommand command = new SQLiteCommand(queryString, dbCon))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    dbCon.Close();
+                    querySuccess = true;
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+            return querySuccess;
+        }
+
+        // OBSOLETE!!!
+        // method to obtain last ID from the DB
+        public int getLastID()
+        {
+            int lastID = 0;
+            if (File.Exists(dbFilePath))
+            {
+                string connectionString = " Data Source = " + dbFilePath + "; Version=3; ";
+
+                // run query to read the data from DB
+                using (SQLiteConnection dbCon = new SQLiteConnection(connectionString))
+                {
+                    try
+                    {
+                        dbCon.Open();
+
+                        using (SQLiteCommand command = new SQLiteCommand("SELECT MAX(user_id) FROM deviceDB", dbCon))
+                        {
+                            using (SQLiteDataReader data = command.ExecuteReader())
+                            {
+                                if (data.Read())
+                                {
+                                    lastID = Convert.ToInt16(data["user_id"]);
+                                }
+                            }
+
+                        }
+
+                        dbCon.Close();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+
+            }
+            else
+            {
+                lastID++;
+            }
+
+            return lastID;
+        }
+
     }
 }
