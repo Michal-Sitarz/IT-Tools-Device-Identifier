@@ -107,6 +107,9 @@ namespace Device_Identifier
             comboBox_InputDevices.SelectedIndex = -1;
 
             checkBox_DockingStation.Checked = false;
+
+            box_locationZone.Text = getLastLocation();
+
             textBox_Username.Select();
 
             btn_SaveToDB.BackColor = Color.IndianRed;
@@ -165,6 +168,11 @@ namespace Device_Identifier
         private void btn_ReadSpecs_Click(object sender, EventArgs e)
         {
             scanSystem();
+            if (computerNameIsFound(pc_ComputerName))
+            {
+                MessageBox.Show("This device already exists in the Database.\nYou won't be able to add it again...","[ Computer Name ]", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btn_SaveToDB.BackColor = Color.Gray;
+            }
         }
 
 
@@ -388,29 +396,6 @@ namespace Device_Identifier
             }
 
 
-            // monitors conected
-            if (numericBox_MonitorsConnected.Value != 0)
-            {
-                periph_MonitorsConnected += " (x" + numericBox_MonitorsConnected.Value.ToString() + ")";
-            }
-            else
-            {
-                DialogResult msgBoxMonitors = MessageBox.Show("Did you forgot about the monitors??", "[ Monitors Connected ]", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (msgBoxMonitors == DialogResult.Yes)
-                {
-                    return false;
-                }
-                else
-                {
-                    if (pc_Type == "Desktop" || pc_Type == "LowProfileDesktop" || pc_Type == "MiniTower" || pc_Type == "Tower")
-                    {
-                        MessageBox.Show("You have to set the number of monitors available \non this desk.", "[ Monitors Connected ]", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
-                }
-            }
-
-
             // input devices
             if (comboBox_InputDevices.Text == "")
             {
@@ -431,6 +416,7 @@ namespace Device_Identifier
                     DialogResult msgBoxDockStation = MessageBox.Show("Did you forget to 'check' the docking station box?", "[ Docking Station ]", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (msgBoxDockStation == DialogResult.Yes)
                     {
+                        checkBox_DockingStation.Checked = true;
                         periph_DockingStation = true;
                     }
                     if (msgBoxDockStation == DialogResult.No)
@@ -442,6 +428,29 @@ namespace Device_Identifier
             else
             {
                 periph_DockingStation = true;
+            }
+
+
+            // monitors conected
+            if (numericBox_MonitorsConnected.Value != 0)
+            {
+                periph_MonitorsConnected += " (x" + numericBox_MonitorsConnected.Value.ToString() + ")";
+            }
+            else
+            {
+                DialogResult msgBoxMonitors = MessageBox.Show("Did you forgot about the monitors??", "[ Monitors Connected ]", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (msgBoxMonitors == DialogResult.Yes)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (pc_Type == "Desktop" || pc_Type == "LowProfileDesktop" || pc_Type == "MiniTower" || pc_Type == "Tower")
+                    {
+                        MessageBox.Show("You have to set the number of monitors available \non this desk.", "[ Monitors Connected ]", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
             }
 
             return true;
@@ -574,11 +583,13 @@ namespace Device_Identifier
             return querySuccess;
         }
 
-        // OBSOLETE!!!
-        // method to obtain last ID from the DB
-        public int getLastID()
+
+        // method to get the last inserted location 
+        // from the Database (SELECT)
+        public string getLastLocation()
         {
-            int lastID = 0;
+            string lastLocation = "";
+            // read from the DB
             if (File.Exists(dbFilePath))
             {
                 string connectionString = " Data Source = " + dbFilePath + "; Version=3; ";
@@ -590,13 +601,13 @@ namespace Device_Identifier
                     {
                         dbCon.Open();
 
-                        using (SQLiteCommand command = new SQLiteCommand("SELECT MAX(user_id) FROM deviceDB", dbCon))
+                        using (SQLiteCommand command = new SQLiteCommand("SELECT MAX(ROWID), user_Location FROM deviceDB", dbCon))
                         {
                             using (SQLiteDataReader data = command.ExecuteReader())
                             {
                                 if (data.Read())
                                 {
-                                    lastID = Convert.ToInt16(data["user_id"]);
+                                    lastLocation = (string)(data["user_Location"]);
                                 }
                             }
 
@@ -612,12 +623,69 @@ namespace Device_Identifier
                 }
 
             }
-            else
+
+            // compute string and attach data to the corresponding box
+            if (lastLocation != "")
             {
-                lastID++;
+                lastLocation = lastLocation.Substring(0, 2);
             }
 
-            return lastID;
+            return lastLocation;
+        }
+
+        public bool computerNameIsFound(string currentName)
+        {
+            bool sameNameFound = false;
+            List<string> compNameList = new List<string>();
+            /// read the comp names from DB
+            /// and put them into ArrayList
+
+            // read from the DB
+            if (File.Exists(dbFilePath))
+            {
+                string connectionString = " Data Source = " + dbFilePath + "; Version=3; ";
+
+                // run query to read the data from DB
+                using (SQLiteConnection dbCon = new SQLiteConnection(connectionString))
+                {
+                    try
+                    {
+                        dbCon.Open();
+
+                        using (SQLiteCommand command = new SQLiteCommand("SELECT pc_ComputerName FROM deviceDB", dbCon))
+                        {
+                            using (SQLiteDataReader data = command.ExecuteReader())
+                            {
+                                while (data.Read())
+                                {
+                                    compNameList.Add((string)(data["pc_ComputerName"]));
+                                }
+                            }
+
+                        }
+
+                        dbCon.Close();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+
+            }
+
+            // search through the array to compare the name
+            foreach (string name in compNameList)
+            {
+                if (currentName == name)
+                {
+                    sameNameFound = true;
+                }
+            }
+
+            // return result
+            return sameNameFound;
         }
 
     }
