@@ -165,21 +165,31 @@ namespace Device_Identifier
         private void btn_ReadSpecs_Click(object sender, EventArgs e)
         {
             scanSystem();
-
         }
+
 
         /// button: SAVE to the database
         private void btn_SaveToDB_Click(object sender, EventArgs e)
         {
-
-            readManualInputFields();
-
-            if (saveDetailsInDB())
+            if (pc_ComputerName != "")
             {
-                btn_SaveToDB.BackColor = Color.ForestGreen;
+                if (btn_SaveToDB.BackColor == Color.IndianRed)
+                {
+                    if (readManualInputFields())
+                    {
+                        if (saveDetailsInDB())
+                        {
+                            btn_SaveToDB.BackColor = Color.ForestGreen;
+                        }
+                    }
+
+                }
+                else { MessageBox.Show("This device has been added already!", "Saving in DB...", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
+            else { MessageBox.Show("Read the device's specs first!!! \n(Use the blue button).", "Details missing!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
         }
+
 
         /// method to scan the system 
         /// and obtain all the required information
@@ -330,48 +340,165 @@ namespace Device_Identifier
         }
 
 
-        // method to assign corresponding values from manual (user's) input
-        public void readManualInputFields()
+        /// method to assign corresponding values 
+        /// from manual (user's) input
+        public bool readManualInputFields()
         {
 
+            // username
+            if (textBox_Username.Text != "")
+            {
+                user_Username = textBox_Username.Text;
+            }
+            else
+            {
+                MessageBox.Show("You forgot to type-in the username \nused on the last log on.", "[ Username ]", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+
+            // location
+            if (box_locationPos.Value != 0)
+            {
+                if (box_locationPos.Value < 10)
+                {
+                    user_Location = box_locationZone.Text + "0" + box_locationPos.Value.ToString();
+                }
+                else
+                {
+                    user_Location = box_locationZone.Text + box_locationPos.Value.ToString();
+                }
+            }
+            else
+            {
+                MessageBox.Show("You forgot to set the location correctly.", "[ Location ]", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+
+            // departments
+            if (comboBox_Department.Text != "")
+            {
+                user_Department = comboBox_Department.Text;
+            }
+            else
+            {
+                MessageBox.Show("You forgot to choose the DEPARTMENT!", "[ Department ]", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+
+            // monitors conected
+            if (numericBox_MonitorsConnected.Value != 0)
+            {
+                periph_MonitorsConnected += " (x" + numericBox_MonitorsConnected.Value.ToString() + ")";
+            }
+            else
+            {
+                DialogResult msgBoxMonitors = MessageBox.Show("Did you forgot about the monitors??", "[ Monitors Connected ]", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (msgBoxMonitors == DialogResult.Yes)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (pc_Type == "Desktop" || pc_Type == "LowProfileDesktop" || pc_Type == "MiniTower" || pc_Type == "Tower")
+                    {
+                        MessageBox.Show("You have to set the number of monitors available \non this desk.", "[ Monitors Connected ]", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                }
+            }
+
+
+            // input devices
+            if (comboBox_InputDevices.Text == "")
+            {
+                DialogResult msgBoxInputDevices = MessageBox.Show("Are you sure there are no mouse or keyboard available?", "[ Input Devices ]", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (msgBoxInputDevices == DialogResult.No)
+                {
+                    return false;
+                }
+            }
+            periph_InputDevice = comboBox_InputDevices.Text;
+
+
+            // docking station
+            if (checkBox_DockingStation.Checked == false)
+            {
+                if (pc_Type == "Laptop" || pc_Type == "Notebook")
+                {
+                    DialogResult msgBoxDockStation = MessageBox.Show("Did you forget to 'check' the docking station box?", "[ Docking Station ]", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (msgBoxDockStation == DialogResult.Yes)
+                    {
+                        periph_DockingStation = true;
+                    }
+                    if (msgBoxDockStation == DialogResult.No)
+                    {
+                        periph_DockingStation = false;
+                    }
+                }
+            }
+            else
+            {
+                periph_DockingStation = true;
+            }
+
+            return true;
         }
 
 
         /// DATABASE functionality (local single-file SQLite DB)
         public bool saveDetailsInDB()
         {
-            
+
             // check if the DB file exists or not
             if (!File.Exists(dbFilePath))
             {
                 createDBfile();
             }
             // query to perform that adds new entry to the DB
-            string querySaveDetails = @"INSERT INTO deviceDB(
-                                        user_ID,
-                                        user_Username, 
-                                        user_Location,
-                                        user_Department,
-	                                    pc_ComputerName,
-                                        pc_SerialNumber,
-	                                    pc_Manufacturer,
-                                        pc_Model,
-	                                    pc_Type,
-                                        pc_OSversion,
-	                                    pcSpecs_CPU,
-                                        pcSpecs_RAMmoduleDetails,
-	                                    pcSpecs_RAMinstalled,
-                                        pcSpecs_RAMcapabilities,
-	                                    pcSpecs_HDDmodel,
-                                        pcSpecs_HDDcapacity,
-	                                    periph_MonitorsConnected,
-                                        periph_InputDevice,
-	                                    periph_DockingStation
-                                    )
-                                    VALUES(
-                                        NULL,
-                                    )";
-            
+            string querySaveDetails = "INSERT INTO deviceDB("
+                                        + "user_ID, "
+                                        + "user_Username, "
+                                        + "user_Location, "
+                                        + "user_Department, "
+                                        + "pc_ComputerName, "
+                                        + "pc_SerialNumber, "
+                                        + "pc_Manufacturer, "
+                                        + "pc_Model, "
+                                        + "pc_Type, "
+                                        + "pc_OSversion, "
+                                        + "pcSpecs_CPU, "
+                                        + "pcSpecs_RAMmoduleDetails, "
+                                        + "pcSpecs_RAMinstalled, "
+                                        + "pcSpecs_RAMcapabilities, "
+                                        + "pcSpecs_HDDmodel, "
+                                        + "pcSpecs_HDDcapacity, "
+                                        + "periph_MonitorsConnected, "
+                                        + "periph_InputDevice, "
+                                        + "periph_DockingStation "
+                                    + ") VALUES ("
+                                        + "NULL, '"
+                                        + user_Username + "','"
+                                        + user_Location + "','"
+                                        + user_Department + "','"
+                                        + pc_ComputerName + "','"
+                                        + pc_SerialNumber + "','"
+                                        + pc_Manufacturer + "','"
+                                        + pc_Model + "','"
+                                        + pc_Type + "','"
+                                        + pc_OSversion + "','"
+                                        + pcSpecs_CPU + "','"
+                                        + pcSpecs_RAMmoduleDetails + "','"
+                                        + pcSpecs_RAMinstalled + "','"
+                                        + pcSpecs_RAMcapabilities + "','"
+                                        + pcSpecs_HDDmodel + "','"
+                                        + pcSpecs_HDDcapacity + "','"
+                                        + periph_MonitorsConnected + "','"
+                                        + periph_InputDevice + "','"
+                                        + periph_DockingStation + "')";
+
             // run the query and return its state
             return runDBquery(querySaveDetails);
         }
@@ -417,6 +544,8 @@ namespace Device_Identifier
 
         }
 
+
+        // default SQLite query (INSERT, CREATE)
         public bool runDBquery(string queryString)
         {
             bool querySuccess = false;
