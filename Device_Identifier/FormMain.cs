@@ -80,7 +80,20 @@ namespace Device_Identifier
         // combo-box lists
         public List<string> user_DepartmentList = new List<string>()
         {
-            "MIS", "Finance", "Purchasing", "Engineering"
+            "MIS",
+            "Engineering",
+            "Management",
+            "Finance",
+            "Purchasing",
+            "Marketing",
+            "HR",
+            "Compliance",
+            "Administration",
+            "Customer Service",
+            "Planning",
+            "Logistics",
+            "Manufacturing",
+            "Quality"
         };
 
         public List<string> periph_InputDeviceList = new List<string>()
