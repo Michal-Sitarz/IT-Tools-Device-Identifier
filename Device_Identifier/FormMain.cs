@@ -170,7 +170,7 @@ namespace Device_Identifier
             scanSystem();
             if (computerNameIsFound(pc_ComputerName))
             {
-                MessageBox.Show("This device already exists in the Database.\nYou won't be able to add it again...","[ Computer Name ]", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("This device already exists in the Database.\nYou won't be able to add it again...", "[ Computer Name ]", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btn_SaveToDB.BackColor = Color.Gray;
             }
         }
@@ -190,13 +190,12 @@ namespace Device_Identifier
                             btn_SaveToDB.BackColor = Color.ForestGreen;
                         }
                     }
-
                 }
                 else { MessageBox.Show("This device has been added already!", "Saving in DB...", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
             else { MessageBox.Show("Read the device's specs first!!! \n(Use the blue button).", "Details missing!", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-
         }
+
 
 
         /// method to scan the system 
