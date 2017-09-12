@@ -471,6 +471,51 @@ namespace Device_Identifier
 
 
         /// DATABASE functionality (local single-file SQLite DB)
+
+        // create DB
+        public void createDBfile()
+        {
+            if (!File.Exists(dbFilePath))
+            {
+                string queryCreateDB = @"CREATE TABLE deviceDB(
+                                        user_ID INTEGER PRIMARY KEY NOT NULL, 
+                                        user_Username TEXT NOT NULL, 
+                                        user_Location TEXT NOT NULL, 
+                                        user_Department TEXT NOT NULL, 
+	                                    pc_ComputerName TEXT NOT NULL, 
+                                        pc_SerialNumber TEXT NOT NULL, 
+	                                    pc_Manufacturer TEXT NOT NULL, 
+                                        pc_Model TEXT NOT NULL, 
+	                                    pc_Type TEXT NOT NULL, 
+                                        pc_OSversion TEXT NOT NULL, 
+	                                    pcSpecs_CPU TEXT NOT NULL, 
+                                        pcSpecs_RAMmoduleDetails TEXT NOT NULL, 
+	                                    pcSpecs_RAMinstalled TEXT NOT NULL, 
+                                        pcSpecs_RAMcapabilities TEXT NOT NULL, 
+	                                    pcSpecs_HDDmodel TEXT NOT NULL, 
+                                        pcSpecs_HDDcapacity TEXT NOT NULL, 
+	                                    periph_MonitorsConnected TEXT NOT NULL, 
+                                        periph_InputDevice TEXT NOT NULL, 
+	                                    periph_DockingStation BOOLEAN NOT NULL
+                                    )";
+                //create DB file
+                try
+                {
+                    SQLiteConnection.CreateFile(dbFilePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Can't access local hard drive.");
+                }
+
+                // run query to create DB tables
+                runDBquery(queryCreateDB);
+            }
+
+        }
+
+
+        // save in DB
         public bool saveDetailsInDB()
         {
 
@@ -523,47 +568,6 @@ namespace Device_Identifier
 
             // run the query and return its state
             return runDBquery(querySaveDetails);
-        }
-
-        public void createDBfile()
-        {
-            if (!File.Exists(dbFilePath))
-            {
-                string queryCreateDB = @"CREATE TABLE deviceDB(
-                                        user_ID INTEGER PRIMARY KEY NOT NULL, 
-                                        user_Username TEXT NOT NULL, 
-                                        user_Location TEXT NOT NULL, 
-                                        user_Department TEXT NOT NULL, 
-	                                    pc_ComputerName TEXT NOT NULL, 
-                                        pc_SerialNumber TEXT NOT NULL, 
-	                                    pc_Manufacturer TEXT NOT NULL, 
-                                        pc_Model TEXT NOT NULL, 
-	                                    pc_Type TEXT NOT NULL, 
-                                        pc_OSversion TEXT NOT NULL, 
-	                                    pcSpecs_CPU TEXT NOT NULL, 
-                                        pcSpecs_RAMmoduleDetails TEXT NOT NULL, 
-	                                    pcSpecs_RAMinstalled TEXT NOT NULL, 
-                                        pcSpecs_RAMcapabilities TEXT NOT NULL, 
-	                                    pcSpecs_HDDmodel TEXT NOT NULL, 
-                                        pcSpecs_HDDcapacity TEXT NOT NULL, 
-	                                    periph_MonitorsConnected TEXT NOT NULL, 
-                                        periph_InputDevice TEXT NOT NULL, 
-	                                    periph_DockingStation BOOLEAN NOT NULL
-                                    )";
-                //create DB file
-                try
-                {
-                    SQLiteConnection.CreateFile(dbFilePath);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Can't access local hard drive.");
-                }
-
-                // run query to create DB tables
-                runDBquery(queryCreateDB);
-            }
-
         }
 
 
