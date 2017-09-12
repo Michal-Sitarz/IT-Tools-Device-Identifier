@@ -9,3 +9,9 @@ C#, SQLite, WMI/Win32 libraries (Windows OS)
 
 <b>Tools:</b><br>
 Microsoft Visual Studio 2017
+
+<b>UI design:</b>
+  <br><a href='User Interface 01 blank.png'>UI design - blank</a>
+  <br><a href='User Interface 02 with data.png'>UI design - with data</a>
+  
+  
