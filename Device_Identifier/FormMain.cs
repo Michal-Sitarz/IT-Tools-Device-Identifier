@@ -530,25 +530,25 @@ namespace Device_Identifier
             if (!File.Exists(dbFilePath))
             {
                 string queryCreateDB = @"CREATE TABLE deviceDB(
-                                        user_ID INTEGER PRIMARY KEY, 
-                                        user_Username TEXT, 
-                                        user_Location TEXT,
-                                        user_Department TEXT,
-	                                    pc_ComputerName TEXT,
-                                        pc_SerialNumber TEXT,
-	                                    pc_Manufacturer TEXT,
-                                        pc_Model TEXT,
-	                                    pc_Type TEXT,
-                                        pc_OSversion TEXT,
-	                                    pcSpecs_CPU TEXT,
-                                        pcSpecs_RAMmoduleDetails TEXT,
-	                                    pcSpecs_RAMinstalled TEXT,
-                                        pcSpecs_RAMcapabilities TEXT,
-	                                    pcSpecs_HDDmodel TEXT,
-                                        pcSpecs_HDDcapacity TEXT,
-	                                    periph_MonitorsConnected TEXT,
-                                        periph_InputDevice TEXT,
-	                                    periph_DockingStation BOOLEAN
+                                        user_ID INTEGER PRIMARY KEY NOT NULL, 
+                                        user_Username TEXT NOT NULL, 
+                                        user_Location TEXT NOT NULL, 
+                                        user_Department TEXT NOT NULL, 
+	                                    pc_ComputerName TEXT NOT NULL, 
+                                        pc_SerialNumber TEXT NOT NULL, 
+	                                    pc_Manufacturer TEXT NOT NULL, 
+                                        pc_Model TEXT NOT NULL, 
+	                                    pc_Type TEXT NOT NULL, 
+                                        pc_OSversion TEXT NOT NULL, 
+	                                    pcSpecs_CPU TEXT NOT NULL, 
+                                        pcSpecs_RAMmoduleDetails TEXT NOT NULL, 
+	                                    pcSpecs_RAMinstalled TEXT NOT NULL, 
+                                        pcSpecs_RAMcapabilities TEXT NOT NULL, 
+	                                    pcSpecs_HDDmodel TEXT NOT NULL, 
+                                        pcSpecs_HDDcapacity TEXT NOT NULL, 
+	                                    periph_MonitorsConnected TEXT NOT NULL, 
+                                        periph_InputDevice TEXT NOT NULL, 
+	                                    periph_DockingStation BOOLEAN NOT NULL
                                     )";
                 //create DB file
                 try
