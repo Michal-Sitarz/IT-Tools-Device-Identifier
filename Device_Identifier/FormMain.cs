@@ -39,6 +39,7 @@ namespace Device_Identifier
 
         public string periph_InputDevice = "";
         public bool periph_DockingStation = false;
+        public bool periph_TPM_BitLocker_ON = false;
         public string periph_MonitorsConnected = "";
 
 
@@ -121,6 +122,7 @@ namespace Device_Identifier
             comboBox_InputDevices.SelectedIndex = -1;
 
             checkBox_DockingStation.Checked = false;
+            checkBox_TPM_BitLocker.Checked = false;
 
             box_locationZone.Text = getLastLocation();
 
@@ -444,6 +446,28 @@ namespace Device_Identifier
             }
 
 
+            // TPM/BitLocker
+            if (checkBox_TPM_BitLocker.Checked == false)
+            {
+                if (pc_Type == "Laptop" || pc_Type == "Notebook")
+                {
+                    DialogResult msgBoxDockStation = MessageBox.Show("TPM/BitLocker checked???", "[ TPM ]", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (msgBoxDockStation == DialogResult.Yes)
+                    {
+                        periph_TPM_BitLocker_ON = checkBox_DockingStation.Checked;
+                    }
+                    if (msgBoxDockStation == DialogResult.No)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                periph_TPM_BitLocker_ON = checkBox_DockingStation.Checked;
+            }
+
+
             // monitors conected
             if (numericBox_MonitorsConnected.Value != 0)
             {
@@ -496,7 +520,8 @@ namespace Device_Identifier
                                         pcSpecs_HDDcapacity TEXT NOT NULL, 
 	                                    periph_MonitorsConnected TEXT NOT NULL, 
                                         periph_InputDevice TEXT NOT NULL, 
-	                                    periph_DockingStation BOOLEAN NOT NULL
+	                                    periph_DockingStation BOOLEAN NOT NULL,
+                                        periph_TPM_BitLocker_ON BOOLEAN NOT NULL
                                     )";
                 //create DB file
                 try
@@ -544,7 +569,8 @@ namespace Device_Identifier
                                         + "pcSpecs_HDDcapacity, "
                                         + "periph_MonitorsConnected, "
                                         + "periph_InputDevice, "
-                                        + "periph_DockingStation "
+                                        + "periph_DockingStation, "
+                                        + "periph_TPM_BitLocker_ON "
                                     + ") VALUES ("
                                         + "NULL, '"
                                         + user_Username + "','"
@@ -564,7 +590,8 @@ namespace Device_Identifier
                                         + pcSpecs_HDDcapacity + "','"
                                         + periph_MonitorsConnected + "','"
                                         + periph_InputDevice + "','"
-                                        + periph_DockingStation + "')";
+                                        + periph_DockingStation + "','"
+                                        + periph_TPM_BitLocker_ON + "')";
 
             // run the query and return its state
             return runDBquery(querySaveDetails);

@@ -77,6 +77,8 @@
             this.label_DockingStation = new System.Windows.Forms.Label();
             this.btn_ReadSpecs = new System.Windows.Forms.Button();
             this.btn_SaveToDB = new System.Windows.Forms.Button();
+            this.checkBox_TPM_BitLocker = new System.Windows.Forms.CheckBox();
+            this.label_TPM_BitLocker = new System.Windows.Forms.Label();
             this.groupBox_PC.SuspendLayout();
             this.groupBox_User.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.box_locationPos)).BeginInit();
@@ -516,6 +518,8 @@
             // 
             // groupBox_Peripherals
             // 
+            this.groupBox_Peripherals.Controls.Add(this.checkBox_TPM_BitLocker);
+            this.groupBox_Peripherals.Controls.Add(this.label_TPM_BitLocker);
             this.groupBox_Peripherals.Controls.Add(this.numericBox_MonitorsConnected);
             this.groupBox_Peripherals.Controls.Add(this.comboBox_InputDevices);
             this.groupBox_Peripherals.Controls.Add(this.textBox_MonitorsConnected);
@@ -566,12 +570,14 @@
             // 
             // checkBox_DockingStation
             // 
-            this.checkBox_DockingStation.AutoSize = true;
-            this.checkBox_DockingStation.Location = new System.Drawing.Point(135, 82);
+            this.checkBox_DockingStation.BackColor = System.Drawing.SystemColors.Window;
+            this.checkBox_DockingStation.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.checkBox_DockingStation.Location = new System.Drawing.Point(135, 83);
+            this.checkBox_DockingStation.Margin = new System.Windows.Forms.Padding(0);
             this.checkBox_DockingStation.Name = "checkBox_DockingStation";
-            this.checkBox_DockingStation.Size = new System.Drawing.Size(15, 14);
+            this.checkBox_DockingStation.Size = new System.Drawing.Size(13, 13);
             this.checkBox_DockingStation.TabIndex = 6;
-            this.checkBox_DockingStation.UseVisualStyleBackColor = true;
+            this.checkBox_DockingStation.UseVisualStyleBackColor = false;
             // 
             // label_MonitorsConnected
             // 
@@ -597,7 +603,7 @@
             // 
             this.label_DockingStation.AutoSize = true;
             this.label_DockingStation.ForeColor = System.Drawing.Color.White;
-            this.label_DockingStation.Location = new System.Drawing.Point(19, 81);
+            this.label_DockingStation.Location = new System.Drawing.Point(19, 84);
             this.label_DockingStation.Name = "label_DockingStation";
             this.label_DockingStation.Size = new System.Drawing.Size(86, 13);
             this.label_DockingStation.TabIndex = 3;
@@ -630,6 +636,28 @@
             this.btn_SaveToDB.Text = "Save to DB";
             this.btn_SaveToDB.UseVisualStyleBackColor = false;
             this.btn_SaveToDB.Click += new System.EventHandler(this.btn_SaveToDB_Click);
+            // 
+            // checkBox_TPM_BitLocker
+            // 
+            this.checkBox_TPM_BitLocker.BackColor = System.Drawing.SystemColors.Window;
+            this.checkBox_TPM_BitLocker.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_TPM_BitLocker.ForeColor = System.Drawing.Color.Red;
+            this.checkBox_TPM_BitLocker.Location = new System.Drawing.Point(354, 83);
+            this.checkBox_TPM_BitLocker.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBox_TPM_BitLocker.Name = "checkBox_TPM_BitLocker";
+            this.checkBox_TPM_BitLocker.Size = new System.Drawing.Size(13, 13);
+            this.checkBox_TPM_BitLocker.TabIndex = 23;
+            this.checkBox_TPM_BitLocker.UseVisualStyleBackColor = false;
+            // 
+            // label_TPM_BitLocker
+            // 
+            this.label_TPM_BitLocker.AutoSize = true;
+            this.label_TPM_BitLocker.ForeColor = System.Drawing.Color.White;
+            this.label_TPM_BitLocker.Location = new System.Drawing.Point(244, 83);
+            this.label_TPM_BitLocker.Name = "label_TPM_BitLocker";
+            this.label_TPM_BitLocker.Size = new System.Drawing.Size(89, 13);
+            this.label_TPM_BitLocker.TabIndex = 22;
+            this.label_TPM_BitLocker.Text = "TPM / BitLocker:";
             // 
             // FormMain
             // 
@@ -715,5 +743,7 @@
         private System.Windows.Forms.Label lblBot_Match;
         private System.Windows.Forms.Label lblTop_Match;
         private System.Windows.Forms.NumericUpDown box_locationPos;
+        private System.Windows.Forms.CheckBox checkBox_TPM_BitLocker;
+        private System.Windows.Forms.Label label_TPM_BitLocker;
     }
 }
