@@ -29,6 +29,7 @@ namespace Device_Identifier
         public string pc_Model = "";
         public string pc_SerialNumber = "";
         public string pc_ComputerName = "";
+        public bool pc_NameMatching = false;
 
         public string pcSpecs_CPU = "";
         public string pcSpecs_RAMmoduleDetails = "";
@@ -100,8 +101,9 @@ namespace Device_Identifier
 
         public List<string> periph_InputDeviceList = new List<string>()
         {
-            "HP mouse & keyboard (wired)",
-            "MS mouse & keyboard (wireless)"
+            "HP set (wired)",
+            "MS set (wireless)",
+            "Dell set (wired)"
         };
 
         // database variables
@@ -130,6 +132,9 @@ namespace Device_Identifier
 
             btn_SaveToDB.BackColor = Color.IndianRed;
 
+            // scan the system for hardware specs
+            scanSystem();
+
         }
 
         /// labels (used as an indicator) to display 
@@ -137,13 +142,15 @@ namespace Device_Identifier
         /// is matching company's naming convention or not
         /// green - for YES, red - for NO
 
-        private void setLabelsColours()
+        private bool setLabelsColours()
         {
+            bool checkCompNameMatchingSN = false;
             string checkSN = pc_SerialNumber;
             string checkCompName = pc_ComputerName.Substring(1);
 
             if (checkSN == checkCompName)
             {
+                checkCompNameMatchingSN = true;
                 // set to blue
                 lblTop_Match.BackColor = Color.CornflowerBlue;
                 lblBot_Match.BackColor = Color.CornflowerBlue;
@@ -156,6 +163,8 @@ namespace Device_Identifier
                 lblBot_Match.BackColor = Color.Red;
                 lblSide_Match.BackColor = Color.Red;
             }
+
+            return checkCompNameMatchingSN;
         }
 
 
@@ -184,11 +193,6 @@ namespace Device_Identifier
         private void btn_ReadSpecs_Click(object sender, EventArgs e)
         {
             scanSystem();
-            if (computerNameIsFound(pc_ComputerName))
-            {
-                MessageBox.Show("This device already exists in the Database.\nYou won't be able to add it again...", "[ Computer Name ]", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                btn_SaveToDB.BackColor = Color.Gray;
-            }
         }
 
 
@@ -232,6 +236,7 @@ namespace Device_Identifier
 
             // Model
             pc_Model = performWin32Query("Model", "Win32_ComputerSystem");
+            pc_Model = trimSpaces(pc_Model);
 
             // Serial Number
             pc_SerialNumber = performWin32Query("SerialNumber", "Win32_BIOS");
@@ -239,16 +244,21 @@ namespace Device_Identifier
             // Computer Name
             pc_ComputerName = performWin32Query("Caption", "Win32_ComputerSystem");
 
+            // Comp. Name matching Serial Number
+            pc_NameMatching = setLabelsColours();
+
             // CPU
-            pcSpecs_CPU = performWin32Query("Name", "Win32_Processor");
+            pcSpecs_CPU = performWin32Query("Name", "Win32_Processor").Trim();
+            pcSpecs_CPU = trimSpaces(pcSpecs_CPU);
 
             // RAM: module details
             pcSpecs_RAMmoduleDetails = performWin32Query("Manufacturer", "Win32_PhysicalMemory");
             pcSpecs_RAMmoduleDetails += " ";
-            pcSpecs_RAMmoduleDetails += performWin32Query("PartNumber", "Win32_PhysicalMemory").Trim();
+            pcSpecs_RAMmoduleDetails += performWin32Query("PartNumber", "Win32_PhysicalMemory");
             pcSpecs_RAMmoduleDetails += " @ ";
             pcSpecs_RAMmoduleDetails += performWin32Query("Speed", "Win32_PhysicalMemory");
             pcSpecs_RAMmoduleDetails += " MHz";
+            pcSpecs_RAMmoduleDetails = trimSpaces(pcSpecs_RAMmoduleDetails);
 
             // RAM: installed
             pcSpecs_RAMinstalled = getRAMinstalled();
@@ -260,6 +270,8 @@ namespace Device_Identifier
 
             // HDD model
             pcSpecs_HDDmodel = performWin32Query("Model", "Win32_DiskDrive WHERE Index=0");
+            pcSpecs_HDDmodel = trimSpaces(pcSpecs_HDDmodel);
+
 
             // HDD capacity
             pcSpecs_HDDcapacity = performWin32Query("Size", "Win32_DiskDrive WHERE Index=0");
@@ -267,11 +279,17 @@ namespace Device_Identifier
 
             // Monitors connected
             periph_MonitorsConnected = performWin32Query("Caption", "Win32_DesktopMonitor");
-
+            periph_MonitorsConnected = trimSpaces(periph_MonitorsConnected);
 
             ///update displayed details
             updateDisplayedDetails();
-            setLabelsColours();
+
+            // warn if the computer is in the database already
+            if (computerNameIsFound(pc_ComputerName))
+            {
+                MessageBox.Show("This device already exists in the Database.\nYou won't be able to add it again...", "[ Computer Name ]", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btn_SaveToDB.BackColor = Color.Gray;
+            }
         }
 
 
@@ -281,9 +299,9 @@ namespace Device_Identifier
             string queryString = "";
             try
             {
-                using (ManagementObjectSearcher mosQuery = new ManagementObjectSearcher("SELECT " + queryField + " FROM " + queryWin32lib))
+                using (ManagementObjectSearcher searcherQuery = new ManagementObjectSearcher("SELECT " + queryField + " FROM " + queryWin32lib))
                 {
-                    foreach (ManagementObject queryData in mosQuery.Get())
+                    foreach (ManagementObject queryData in searcherQuery.Get())
                     {
                         if (queryData[queryField] != null)
                         {
@@ -372,6 +390,12 @@ namespace Device_Identifier
             if (textBox_Username.Text != "")
             {
                 user_Username = textBox_Username.Text;
+                // add domain address (@doverfs.com) automatically, if not typed-in
+                if (!user_Username.Contains("@"))
+                {
+                    user_Username += "@doverfs.com";
+                }
+
             }
             else
             {
@@ -452,19 +476,17 @@ namespace Device_Identifier
                 if (pc_Type == "Laptop" || pc_Type == "Notebook")
                 {
                     DialogResult msgBoxDockStation = MessageBox.Show("TPM/BitLocker checked???", "[ TPM ]", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (msgBoxDockStation == DialogResult.Yes)
-                    {
-                        periph_TPM_BitLocker_ON = checkBox_DockingStation.Checked;
-                    }
+                    
                     if (msgBoxDockStation == DialogResult.No)
                     {
                         return false;
                     }
                 }
+                
             }
             else
             {
-                periph_TPM_BitLocker_ON = checkBox_DockingStation.Checked;
+                periph_TPM_BitLocker_ON = true;
             }
 
 
@@ -507,7 +529,8 @@ namespace Device_Identifier
                                         user_Location TEXT NOT NULL, 
                                         user_Department TEXT NOT NULL, 
 	                                    pc_ComputerName TEXT NOT NULL, 
-                                        pc_SerialNumber TEXT NOT NULL, 
+                                        pc_SerialNumber TEXT NOT NULL,
+                                        pc_NameMatching BOOLEAN NOT NULL,
 	                                    pc_Manufacturer TEXT NOT NULL, 
                                         pc_Model TEXT NOT NULL, 
 	                                    pc_Type TEXT NOT NULL, 
@@ -557,6 +580,7 @@ namespace Device_Identifier
                                         + "user_Department, "
                                         + "pc_ComputerName, "
                                         + "pc_SerialNumber, "
+                                        + "pc_NameMatching, "
                                         + "pc_Manufacturer, "
                                         + "pc_Model, "
                                         + "pc_Type, "
@@ -578,6 +602,7 @@ namespace Device_Identifier
                                         + user_Department + "','"
                                         + pc_ComputerName + "','"
                                         + pc_SerialNumber + "','"
+                                        + pc_NameMatching + "','"
                                         + pc_Manufacturer + "','"
                                         + pc_Model + "','"
                                         + pc_Type + "','"
@@ -730,6 +755,17 @@ namespace Device_Identifier
 
             // return result
             return sameNameFound;
+        }
+
+        // method to change multiple whitespaces into single space
+        public string trimSpaces(string strTrim)
+        {
+            strTrim = strTrim.Trim(); // trim any leading and trailing whitespaces
+            while (strTrim.Contains("  "))
+            {
+                strTrim = strTrim.Replace("  ", " "); // trim any double-spaces to single-spaces
+            }
+            return strTrim;
         }
 
     }

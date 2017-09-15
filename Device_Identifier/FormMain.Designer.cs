@@ -68,6 +68,8 @@
             this.label_RAMinstalled = new System.Windows.Forms.Label();
             this.label_CPU = new System.Windows.Forms.Label();
             this.groupBox_Peripherals = new System.Windows.Forms.GroupBox();
+            this.checkBox_TPM_BitLocker = new System.Windows.Forms.CheckBox();
+            this.label_TPM_BitLocker = new System.Windows.Forms.Label();
             this.numericBox_MonitorsConnected = new System.Windows.Forms.NumericUpDown();
             this.comboBox_InputDevices = new System.Windows.Forms.ComboBox();
             this.textBox_MonitorsConnected = new System.Windows.Forms.TextBox();
@@ -77,8 +79,6 @@
             this.label_DockingStation = new System.Windows.Forms.Label();
             this.btn_ReadSpecs = new System.Windows.Forms.Button();
             this.btn_SaveToDB = new System.Windows.Forms.Button();
-            this.checkBox_TPM_BitLocker = new System.Windows.Forms.CheckBox();
-            this.label_TPM_BitLocker = new System.Windows.Forms.Label();
             this.groupBox_PC.SuspendLayout();
             this.groupBox_User.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.box_locationPos)).BeginInit();
@@ -340,6 +340,7 @@
             // 
             this.box_locationZone.BackColor = System.Drawing.Color.White;
             this.box_locationZone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.box_locationZone.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.box_locationZone.Location = new System.Drawing.Point(103, 51);
             this.box_locationZone.Name = "box_locationZone";
             this.box_locationZone.Size = new System.Drawing.Size(38, 20);
@@ -535,6 +536,28 @@
             this.groupBox_Peripherals.TabStop = false;
             this.groupBox_Peripherals.Text = "Peripherals:";
             // 
+            // checkBox_TPM_BitLocker
+            // 
+            this.checkBox_TPM_BitLocker.BackColor = System.Drawing.SystemColors.Window;
+            this.checkBox_TPM_BitLocker.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_TPM_BitLocker.ForeColor = System.Drawing.Color.Red;
+            this.checkBox_TPM_BitLocker.Location = new System.Drawing.Point(354, 83);
+            this.checkBox_TPM_BitLocker.Margin = new System.Windows.Forms.Padding(0);
+            this.checkBox_TPM_BitLocker.Name = "checkBox_TPM_BitLocker";
+            this.checkBox_TPM_BitLocker.Size = new System.Drawing.Size(13, 13);
+            this.checkBox_TPM_BitLocker.TabIndex = 23;
+            this.checkBox_TPM_BitLocker.UseVisualStyleBackColor = false;
+            // 
+            // label_TPM_BitLocker
+            // 
+            this.label_TPM_BitLocker.AutoSize = true;
+            this.label_TPM_BitLocker.ForeColor = System.Drawing.Color.White;
+            this.label_TPM_BitLocker.Location = new System.Drawing.Point(244, 83);
+            this.label_TPM_BitLocker.Name = "label_TPM_BitLocker";
+            this.label_TPM_BitLocker.Size = new System.Drawing.Size(89, 13);
+            this.label_TPM_BitLocker.TabIndex = 22;
+            this.label_TPM_BitLocker.Text = "TPM / BitLocker:";
+            // 
             // numericBox_MonitorsConnected
             // 
             this.numericBox_MonitorsConnected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -559,11 +582,10 @@
             // 
             // textBox_MonitorsConnected
             // 
-            this.textBox_MonitorsConnected.BackColor = System.Drawing.Color.LightGray;
+            this.textBox_MonitorsConnected.BackColor = System.Drawing.SystemColors.Window;
             this.textBox_MonitorsConnected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_MonitorsConnected.Location = new System.Drawing.Point(135, 24);
             this.textBox_MonitorsConnected.Name = "textBox_MonitorsConnected";
-            this.textBox_MonitorsConnected.ReadOnly = true;
             this.textBox_MonitorsConnected.Size = new System.Drawing.Size(187, 20);
             this.textBox_MonitorsConnected.TabIndex = 21;
             this.textBox_MonitorsConnected.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -619,7 +641,7 @@
             this.btn_ReadSpecs.Name = "btn_ReadSpecs";
             this.btn_ReadSpecs.Size = new System.Drawing.Size(168, 50);
             this.btn_ReadSpecs.TabIndex = 8;
-            this.btn_ReadSpecs.Text = "Read Specs";
+            this.btn_ReadSpecs.Text = "Refresh Specs";
             this.btn_ReadSpecs.UseVisualStyleBackColor = false;
             this.btn_ReadSpecs.Click += new System.EventHandler(this.btn_ReadSpecs_Click);
             // 
@@ -636,28 +658,6 @@
             this.btn_SaveToDB.Text = "Save to DB";
             this.btn_SaveToDB.UseVisualStyleBackColor = false;
             this.btn_SaveToDB.Click += new System.EventHandler(this.btn_SaveToDB_Click);
-            // 
-            // checkBox_TPM_BitLocker
-            // 
-            this.checkBox_TPM_BitLocker.BackColor = System.Drawing.SystemColors.Window;
-            this.checkBox_TPM_BitLocker.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_TPM_BitLocker.ForeColor = System.Drawing.Color.Red;
-            this.checkBox_TPM_BitLocker.Location = new System.Drawing.Point(354, 83);
-            this.checkBox_TPM_BitLocker.Margin = new System.Windows.Forms.Padding(0);
-            this.checkBox_TPM_BitLocker.Name = "checkBox_TPM_BitLocker";
-            this.checkBox_TPM_BitLocker.Size = new System.Drawing.Size(13, 13);
-            this.checkBox_TPM_BitLocker.TabIndex = 23;
-            this.checkBox_TPM_BitLocker.UseVisualStyleBackColor = false;
-            // 
-            // label_TPM_BitLocker
-            // 
-            this.label_TPM_BitLocker.AutoSize = true;
-            this.label_TPM_BitLocker.ForeColor = System.Drawing.Color.White;
-            this.label_TPM_BitLocker.Location = new System.Drawing.Point(244, 83);
-            this.label_TPM_BitLocker.Name = "label_TPM_BitLocker";
-            this.label_TPM_BitLocker.Size = new System.Drawing.Size(89, 13);
-            this.label_TPM_BitLocker.TabIndex = 22;
-            this.label_TPM_BitLocker.Text = "TPM / BitLocker:";
             // 
             // FormMain
             // 
