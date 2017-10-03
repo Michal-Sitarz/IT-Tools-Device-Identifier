@@ -492,6 +492,7 @@ namespace Device_Identifier
 
 
             // monitors conected
+            periph_MonitorsConnected = textBox_MonitorsConnected.Text;
             if (numericBox_MonitorsConnected.Value != 0)
             {
                 periph_MonitorsConnected += " (x" + numericBox_MonitorsConnected.Value.ToString() + ")";
