@@ -95,7 +95,8 @@ namespace Device_Identifier
             "Planning",
             "Logistics",
             "Manufacturing",
-            "Quality"
+            "Quality",
+            "temporary"
         };
 
 
@@ -140,7 +141,7 @@ namespace Device_Identifier
         /// labels (used as an indicator) to display 
         /// if the Computer Name / Serial Number
         /// is matching company's naming convention or not
-        /// green - for YES, red - for NO
+        /// blue: YES, red: NO
 
         private bool setLabelsColours()
         {
