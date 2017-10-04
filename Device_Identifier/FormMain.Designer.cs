@@ -106,7 +106,7 @@
             this.label_Username.Location = new System.Drawing.Point(19, 28);
             this.label_Username.Name = "label_Username";
             this.label_Username.Size = new System.Drawing.Size(58, 13);
-            this.label_Username.TabIndex = 2;
+            this.label_Username.TabIndex = 0;
             this.label_Username.Text = "Username:";
             // 
             // label_Location
@@ -545,7 +545,7 @@
             this.checkBox_TPM_BitLocker.Margin = new System.Windows.Forms.Padding(0);
             this.checkBox_TPM_BitLocker.Name = "checkBox_TPM_BitLocker";
             this.checkBox_TPM_BitLocker.Size = new System.Drawing.Size(13, 13);
-            this.checkBox_TPM_BitLocker.TabIndex = 23;
+            this.checkBox_TPM_BitLocker.TabIndex = 8;
             this.checkBox_TPM_BitLocker.UseVisualStyleBackColor = false;
             // 
             // label_TPM_BitLocker
@@ -555,7 +555,7 @@
             this.label_TPM_BitLocker.Location = new System.Drawing.Point(244, 83);
             this.label_TPM_BitLocker.Name = "label_TPM_BitLocker";
             this.label_TPM_BitLocker.Size = new System.Drawing.Size(89, 13);
-            this.label_TPM_BitLocker.TabIndex = 22;
+            this.label_TPM_BitLocker.TabIndex = 7;
             this.label_TPM_BitLocker.Text = "TPM / BitLocker:";
             // 
             // numericBox_MonitorsConnected
@@ -569,7 +569,7 @@
             0});
             this.numericBox_MonitorsConnected.Name = "numericBox_MonitorsConnected";
             this.numericBox_MonitorsConnected.Size = new System.Drawing.Size(39, 20);
-            this.numericBox_MonitorsConnected.TabIndex = 7;
+            this.numericBox_MonitorsConnected.TabIndex = 2;
             // 
             // comboBox_InputDevices
             // 
@@ -578,7 +578,7 @@
             this.comboBox_InputDevices.Location = new System.Drawing.Point(135, 52);
             this.comboBox_InputDevices.Name = "comboBox_InputDevices";
             this.comboBox_InputDevices.Size = new System.Drawing.Size(232, 21);
-            this.comboBox_InputDevices.TabIndex = 5;
+            this.comboBox_InputDevices.TabIndex = 4;
             // 
             // textBox_MonitorsConnected
             // 
@@ -587,7 +587,7 @@
             this.textBox_MonitorsConnected.Location = new System.Drawing.Point(135, 24);
             this.textBox_MonitorsConnected.Name = "textBox_MonitorsConnected";
             this.textBox_MonitorsConnected.Size = new System.Drawing.Size(187, 20);
-            this.textBox_MonitorsConnected.TabIndex = 21;
+            this.textBox_MonitorsConnected.TabIndex = 1;
             this.textBox_MonitorsConnected.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // checkBox_DockingStation
@@ -608,7 +608,7 @@
             this.label_MonitorsConnected.Location = new System.Drawing.Point(19, 26);
             this.label_MonitorsConnected.Name = "label_MonitorsConnected";
             this.label_MonitorsConnected.Size = new System.Drawing.Size(104, 13);
-            this.label_MonitorsConnected.TabIndex = 4;
+            this.label_MonitorsConnected.TabIndex = 0;
             this.label_MonitorsConnected.Text = "Monitors connected:";
             // 
             // label_InputDevices
@@ -618,7 +618,7 @@
             this.label_InputDevices.Location = new System.Drawing.Point(19, 55);
             this.label_InputDevices.Name = "label_InputDevices";
             this.label_InputDevices.Size = new System.Drawing.Size(74, 13);
-            this.label_InputDevices.TabIndex = 2;
+            this.label_InputDevices.TabIndex = 3;
             this.label_InputDevices.Text = "Input devices:";
             // 
             // label_DockingStation
@@ -628,7 +628,7 @@
             this.label_DockingStation.Location = new System.Drawing.Point(19, 84);
             this.label_DockingStation.Name = "label_DockingStation";
             this.label_DockingStation.Size = new System.Drawing.Size(86, 13);
-            this.label_DockingStation.TabIndex = 3;
+            this.label_DockingStation.TabIndex = 5;
             this.label_DockingStation.Text = "Docking Station:";
             // 
             // btn_ReadSpecs
@@ -654,7 +654,7 @@
             this.btn_SaveToDB.Location = new System.Drawing.Point(581, 431);
             this.btn_SaveToDB.Name = "btn_SaveToDB";
             this.btn_SaveToDB.Size = new System.Drawing.Size(168, 50);
-            this.btn_SaveToDB.TabIndex = 9;
+            this.btn_SaveToDB.TabIndex = 3;
             this.btn_SaveToDB.Text = "Save to DB";
             this.btn_SaveToDB.UseVisualStyleBackColor = false;
             this.btn_SaveToDB.Click += new System.EventHandler(this.btn_SaveToDB_Click);
