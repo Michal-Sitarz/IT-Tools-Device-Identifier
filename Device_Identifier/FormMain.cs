@@ -89,13 +89,11 @@ namespace Device_Identifier
             "Purchasing",
             "Marketing",
             "HR",
-            "Compliance",
-            "Administration",
             "Customer Service",
-            "Planning",
             "Logistics",
             "Manufacturing",
             "Quality",
+            "Reception",
             "temporary"
         };
 
@@ -138,35 +136,6 @@ namespace Device_Identifier
 
         }
 
-        /// labels (used as an indicator) to display 
-        /// if the Computer Name / Serial Number
-        /// is matching company's naming convention or not
-        /// blue: YES, red: NO
-
-        private bool setLabelsColours()
-        {
-            bool checkCompNameMatchingSN = false;
-            string checkSN = pc_SerialNumber;
-            string checkCompName = pc_ComputerName.Substring(1);
-
-            if (checkSN == checkCompName)
-            {
-                checkCompNameMatchingSN = true;
-                // set to blue
-                lblTop_Match.BackColor = Color.CornflowerBlue;
-                lblBot_Match.BackColor = Color.CornflowerBlue;
-                lblSide_Match.BackColor = Color.CornflowerBlue;
-            }
-            else
-            {
-                // set to red
-                lblTop_Match.BackColor = Color.Red;
-                lblBot_Match.BackColor = Color.Red;
-                lblSide_Match.BackColor = Color.Red;
-            }
-
-            return checkCompNameMatchingSN;
-        }
 
 
         /// method to display values in the corresponding fields
@@ -224,35 +193,50 @@ namespace Device_Identifier
         private void scanSystem()
         {
 
-            // OS version
+            /// OS version
             pc_OSversion = performWin32Query("Caption", "Win32_OperatingSystem");
             pc_OSversion += " ";
             pc_OSversion += performWin32Query("OSArchitecture", "Win32_OperatingSystem");
 
-            // Type
+            /// Type
             pc_Type = getChassisType().ToString();
 
-            // Manufacturer
+            /// Manufacturer
             pc_Manufacturer = performWin32Query("Manufacturer", "Win32_ComputerSystem");
 
-            // Model
+            // keep the names consistent and short
+            if (pc_Manufacturer.Contains("HP") || pc_Manufacturer.Contains("Hewlett-Packard"))
+            {
+                pc_Manufacturer = "HP";
+            }
+            else if (pc_Manufacturer.Contains("Dell"))
+            {
+                pc_Manufacturer = "Dell";
+            }
+            else
+            {
+                pc_Manufacturer = "other";
+            }
+
+
+            /// Model
             pc_Model = performWin32Query("Model", "Win32_ComputerSystem");
             pc_Model = trimSpaces(pc_Model);
 
-            // Serial Number
+            /// Serial Number
             pc_SerialNumber = performWin32Query("SerialNumber", "Win32_BIOS");
 
-            // Computer Name
+            /// Computer Name
             pc_ComputerName = performWin32Query("Caption", "Win32_ComputerSystem");
 
-            // Comp. Name matching Serial Number
+            /// Comp. Name matching Serial Number
             pc_NameMatching = setLabelsColours();
 
-            // CPU
+            /// CPU
             pcSpecs_CPU = performWin32Query("Name", "Win32_Processor").Trim();
             pcSpecs_CPU = trimSpaces(pcSpecs_CPU);
 
-            // RAM: module details
+            /// RAM: module details
             pcSpecs_RAMmoduleDetails = performWin32Query("Manufacturer", "Win32_PhysicalMemory");
             pcSpecs_RAMmoduleDetails += " ";
             pcSpecs_RAMmoduleDetails += performWin32Query("PartNumber", "Win32_PhysicalMemory");
@@ -261,26 +245,27 @@ namespace Device_Identifier
             pcSpecs_RAMmoduleDetails += " MHz";
             pcSpecs_RAMmoduleDetails = trimSpaces(pcSpecs_RAMmoduleDetails);
 
-            // RAM: installed
+            /// RAM: installed
             pcSpecs_RAMinstalled = getRAMinstalled();
 
-            // RAM: capabilities
+            /// RAM: capabilities
             pcSpecs_RAMcapabilities = performWin32Query("MaxCapacity", "Win32_PhysicalMemoryArray");
             pcSpecs_RAMcapabilities = (Convert.ToUInt64(pcSpecs_RAMcapabilities) / (1024 * 1024)).ToString() + " GB / "; //converts to GB units
             pcSpecs_RAMcapabilities += performWin32Query("MemoryDevices", "Win32_PhysicalMemoryArray");
 
-            // HDD model
+            /// HDD model
             pcSpecs_HDDmodel = performWin32Query("Model", "Win32_DiskDrive WHERE Index=0");
             pcSpecs_HDDmodel = trimSpaces(pcSpecs_HDDmodel);
 
 
-            // HDD capacity
+            /// HDD capacity
             pcSpecs_HDDcapacity = performWin32Query("Size", "Win32_DiskDrive WHERE Index=0");
             pcSpecs_HDDcapacity = Convert.ToInt16(Convert.ToUInt64(pcSpecs_HDDcapacity) / (Math.Pow(1000, 3))).ToString() + " GB"; //converts to GB units
 
-            // Monitors connected
+            /// Monitors connected
             periph_MonitorsConnected = performWin32Query("Caption", "Win32_DesktopMonitor");
             periph_MonitorsConnected = trimSpaces(periph_MonitorsConnected);
+
 
             ///update displayed details
             updateDisplayedDetails();
@@ -292,6 +277,44 @@ namespace Device_Identifier
                 btn_SaveToDB.BackColor = Color.Gray;
             }
         }
+
+
+        /// labels (used as an indicator) to display 
+        /// if the Computer Name matches company's naming convention
+        /// blue: YES, red: NO
+
+        private bool setLabelsColours()
+        {
+            bool checkCompNameMatchingSN = false;
+            
+            // check if the serial number matches computer name  
+            if (pc_SerialNumber == pc_ComputerName.Substring(1))
+            {
+                // check if the computer name prefix matches the manufacturer name, e.g. H for HP
+                if (pc_ComputerName.Substring(0, 1) == pc_Manufacturer.Substring(0, 1))
+                {
+                    checkCompNameMatchingSN = true;
+                }
+            }
+
+            if (checkCompNameMatchingSN)
+            {
+                // set label to blue
+                lblTop_Match.BackColor = Color.CornflowerBlue;
+                lblBot_Match.BackColor = Color.CornflowerBlue;
+                lblSide_Match.BackColor = Color.CornflowerBlue;
+            }
+            else
+            {
+                // set label to red
+                lblTop_Match.BackColor = Color.Red;
+                lblBot_Match.BackColor = Color.Red;
+                lblSide_Match.BackColor = Color.Red;
+            }
+
+            return checkCompNameMatchingSN;
+        }
+
 
 
         /// method to perform single WMI query
@@ -477,13 +500,13 @@ namespace Device_Identifier
                 if (pc_Type == "Laptop" || pc_Type == "Notebook")
                 {
                     DialogResult msgBoxDockStation = MessageBox.Show("TPM/BitLocker checked???", "[ TPM ]", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    
+
                     if (msgBoxDockStation == DialogResult.No)
                     {
                         return false;
                     }
                 }
-                
+
             }
             else
             {
