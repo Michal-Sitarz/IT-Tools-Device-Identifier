@@ -286,7 +286,7 @@ namespace Device_Identifier
         private bool setLabelsColours()
         {
             bool checkCompNameMatchingSN = false;
-            
+
             // check if the serial number matches computer name  
             if (pc_SerialNumber == pc_ComputerName.Substring(1))
             {
@@ -417,7 +417,10 @@ namespace Device_Identifier
                 // add domain address (@doverfs.com) automatically, if not typed-in
                 if (!user_Username.Contains("@"))
                 {
-                    user_Username += "@doverfs.com";
+                    if (user_Username != "none" && user_Username != "empty")
+                    {
+                        user_Username += "@doverfs.com";
+                    }
                 }
 
             }
